@@ -1,5 +1,5 @@
 # Batch Script 
-Explanation
+Explanation of What a Batch Script is/ Does
 ## Example:
 ``` shell script
 #!/bin/bash -l
