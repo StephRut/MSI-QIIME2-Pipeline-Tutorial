@@ -8,7 +8,7 @@
 ## Step 2: Connect to MSI Server
  1) locate raw read files and copy directory into home directory
  2) create new directory for analysis
-
+3)  find [batch files](/../Batch Script.md) and Slurm scheduler
 ## Step 3: Creating a Manifest File
   1) Dependent on QIIME Version Used
   2) Make Sure no Extra Space in Column
@@ -37,6 +37,6 @@
  6) train classifier code
  7) Learn the classifier (i believe 16s you trim to V4 region) but in ITS its best not to do trimming
 ## Step 9: Taxonomy
- 1)create taxa feature table (ASV)
- 2)convert taxa table into .txt
+ 1) create taxa feature table (ASV)
+ 2) convert taxa table into .txt
  3) open in excel 
