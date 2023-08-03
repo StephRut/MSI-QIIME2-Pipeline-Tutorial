@@ -1,14 +1,15 @@
 # MSI_QIIME2_Pipeline_Tutorial
 ## Step 1: Software Requirements
-  1) FileZilla
+  1) FileZilla (Cyberduck, etc.)
   2) Text Editor 
-  3) Citrix
+  3) Citrix (Cisco Anyconnect, etc.)
   4) Excel
 
 ## Step 2: Connect to MSI Server
  1) locate raw read files and copy directory into home directory
  2) create new directory for analysis
-3)  find [batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler
+ 3) linux commands link
+4)  find [batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler
 ## Step 3: Creating a Manifest File
   1) Dependent on QIIME Version Used
   2) Make Sure no Extra Space in Column
