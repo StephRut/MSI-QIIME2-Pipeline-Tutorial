@@ -23,7 +23,7 @@
  2) visualize imported reads Qiime  2 View
 ## Step : Analyze FastQC
 1) link to how to understand
-
+2)note how quality decreases with time
 ## Step 6: Trim Primers
  1) trimming forward and reverse primers
  2) visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths
