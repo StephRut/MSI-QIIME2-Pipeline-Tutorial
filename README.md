@@ -18,6 +18,12 @@ link to what 16s v4 ITS ITS2 is
   4) Example of End Product
   5) screenshot and link to example
 ## Step 4: Load QIIME2 on MSI
+This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
+
+_Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
+```
+module load qiime2/2018.11
+```
 ## Step 5: Import Manifest
  1) import manifest and get sequences in .qza format
  2) visualize imported reads Qiime  2 View
@@ -26,9 +32,7 @@ link to what 16s v4 ITS ITS2 is
 2)note how quality decreases with time
 ## Step 6: Trim Primers
  1) trimming forward and reverse primers
- 2)
- 3)
-   ##  visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths, try to keep as much data as you can
+## Step : visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths, try to keep as much data as you can
 ## Step 7: Filter the Sequences
  4) know the length of the sequence you are targeting, if you trim too short, then there might not be enough overlap to merge the reads, in which case single end analysis would likely give better results
  5) ideally, keep the median above q 30
