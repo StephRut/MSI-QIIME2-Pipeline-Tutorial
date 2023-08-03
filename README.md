@@ -1,4 +1,5 @@
 # MSI_QIIME2_Pipeline_Tutorial
+Intro...
 ## Step 1: Software Requirements
   1) FileZilla (Cyberduck, etc.)
   2) Text Editor 
