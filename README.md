@@ -28,7 +28,7 @@
  6) explain what a quality score is 30
 7) explain EE
 8) explain p-trunc-q
-9) visualize the dada stats... make sure you aren't loosing too many reads
+9) visualize the dada stats... make sure you aren't loosing too many reads ideally 70% recovery
 ## Step 8: Training the Classifier
  1) Download the Classifier from either green genes 16s or Unite ITS
  2) Link both of them on the page
@@ -40,4 +40,6 @@
 ## Step 9: Taxonomy
  1) create taxa feature table (ASV)
  2) convert taxa table into .txt
- 3) open in excel 
+ 3) open in excel
+ 4) analysis
+
