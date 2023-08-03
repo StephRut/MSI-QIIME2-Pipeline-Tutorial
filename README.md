@@ -8,7 +8,7 @@ link to what 16s v4 ITS ITS2 is
 ## Step 2: Connect to MSI Server
  1) locate raw read files and copy directory into home directory
  2) create new directory for analysis
- 3) linux commands link
+ 3) linux commands [cheat sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)
 4)  find [batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler
 5)  link to MSI OnDemand
 ## Step 3: Creating a Manifest File
