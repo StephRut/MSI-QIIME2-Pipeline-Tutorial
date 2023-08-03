@@ -21,6 +21,9 @@
 ## Step 5: Import Manifest
  1) import manifest and get sequences in .qza format
  2) visualize imported reads Qiime  2 View
+## Step : Analyze FastQC
+1) link to how to understand
+
 ## Step 6: Trim Primers
  1) trimming forward and reverse primers
  2) visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths
@@ -31,6 +34,7 @@
 7) explain EE
 8) explain p-trunc-q
 9) visualize the dada stats... make sure you aren't loosing too many reads ideally 70% recovery
+
 ## Step 8: Training the Classifier
  1) Download the Classifier from either green genes 16s or Unite ITS
  2) Link both of them on the page
