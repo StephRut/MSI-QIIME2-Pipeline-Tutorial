@@ -14,3 +14,4 @@ module load qiime2/2018.11
 qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads unite-ver9-99-seqs-29.11.2022.qza --i-reference-taxonomy unite-ver9-99-tax-29.11.2022.qza --o-classifier unite-ver7-99-classifier-29.11.2022.qza
 ```
 ## Explanation of Each Line
+link to MSI scheduler
