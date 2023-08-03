@@ -16,6 +16,7 @@
   2) Make Sure no Extra Space in Column
   3) .csv file
   4) Example of End Product
+  5) screenshot and link to example
 ## Step 4: Load QIIME2 on MSI
 ## Step 5: Import Manifest
  1) import manifest and get sequences in .qza format
