@@ -12,7 +12,7 @@ link to what 16s v4 ITS ITS2 is
  1) locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
 
 ```
-cp -r project_1 ~/project_1```
+cp -r project_1 ~/project_1 ```
 
     Here we are copying 'project_1' directory into a new directory named 'project_1' in our home directory.
  3) Next, create a new directory for analysis
