@@ -8,22 +8,32 @@ Intro...
 link to what 16s v4 ITS ITS2 is
 ## Step 2: Connect to MSI Server
 **For beginers, use linux Cheat Sheet [cheat sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
+ 
   _Take note of File Commands and Directory Navigation_
- 1) locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
+ 1) Locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
 
-```
-cp -r project_1 ~/project_1 ```
+  ```
+  cp -r project_1 ~/project_1
+  ```
 
-    Here we are copying 'project_1' directory into a new directory named 'project_1' in our home directory.
+Here we are copying 'project_1' directory into a new directory named 'project_1' in our home directory.
+
  3) Next, create a new directory for analysis
+   
     ```
     mkdir project_1_analysis
     ```
+    
 6)  find [batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler
 7)  link to MSI OnDemand
 ## Step 3: Creating a Manifest File
-  1) Dependent on QIIME Version Used
-  2) Make Sure no Extra Space in Column
+_Format Dependent on QIIME Version Used_
+A manifest file is a file that maps the raw read sample file to a 'sample-id'. Essentially, the manifest file associates all raw reads together and gives each read a ID.
+Your manifest file will have 3 columns, with the headers 'sample-id', 'absolute-filepath', and 'direction'. Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!
+Check to see if your raw reads have R1 and R2 in their names, if so you have both forward and reverse reads.
+R1 represents the forward read, and R2 represents the reverse.
+Your 'sample-id
+  1) Make Sure no Extra Space in Column
   3) .csv file
   4) Example of End Product
   5) screenshot and link to example
