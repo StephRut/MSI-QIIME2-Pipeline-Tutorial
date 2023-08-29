@@ -42,7 +42,8 @@ Ex: ```/home/absolute/filepath/project_1```
 To determine what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads.
 R1 represents the forward read, and R2 represents the reverse.
 
-Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. This tutorial will continue forward using excel. 
+Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. This tutorial will continue forward using Excel. 
+ do ls -l
 
 
   1) Make Sure no Extra Space in Column
