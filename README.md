@@ -10,7 +10,7 @@ link to what 16s v4 ITS ITS2 is
 **For beginers, use linux Cheat Sheet [cheat sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
   _Take note of File Commands and Directory Navigation_
  1) locate your raw read files (look for files ending in .fastq) and copy the directory (another term for folder) into a new directory in your home directory
-'''cp project_1 ~/project_1'''
+```cp project_1 ~/project_1```
     
  3) create new directory for analysis
  4) linux commands 
