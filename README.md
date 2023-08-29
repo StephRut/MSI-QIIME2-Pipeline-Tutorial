@@ -29,10 +29,11 @@ Here we are copying 'project_1' directory into a new directory named 'project_1'
 ## Step 3: Creating a Manifest File
 _Format Dependent on QIIME Version Used_
 A manifest file is a file that maps the raw read sample file to a 'sample-id'. Essentially, the manifest file associates all raw reads together and gives each read a ID.
-Your manifest file will have 3 columns, with the headers 'sample-id', 'absolute-filepath', and 'direction'. Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!
-Check to see if your raw reads have R1 and R2 in their names, if so you have both forward and reverse reads.
+Your manifest file will have 3 columns, with the headers ```'sample-id'```, ```'absolute-filepath'```, and ```'direction'```. Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!
+
+The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id).
+The absolute-filepath is the full path beginning from the root and ending with the file you are specifying. In MSI, the absolute filepath will begin with ```'/home'```. No matter which directory you are in, an absolute filepath will always specify the same directory/file. To determine your what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names, if so you have both forward and reverse reads.
 R1 represents the forward read, and R2 represents the reverse.
-Your 'sample-id
   1) Make Sure no Extra Space in Column
   3) .csv file
   4) Example of End Product
