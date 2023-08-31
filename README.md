@@ -1,15 +1,19 @@
 # MSI_QIIME2_Pipeline_Tutorial
 Intro...
 ## Step 1: Software Requirements
-  1) FileZilla (Cyberduck, etc.)
-  2) Text Editor 
-  3) Citrix (Cisco Anyconnect, etc.)
-  4) Excel
+  1) File transfer Software like FileZilla (Cyberduck, etc.)
+  2) Text Editor like Atom, Notepad++
+  3) Terminal such as Command Prompt, Windows Powershell
+  4) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
+  5) Excel (GoogleSheets, etc.)
 link to what 16s v4 ITS ITS2 is
 ## Step 2: Connect to MSI Server
-**For beginers, use linux Cheat Sheet [cheat sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
- 
-  _Take note of File Commands and Directory Navigation_
+**For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
+
+ _Take note of File Commands and Directory Navigation_
+
+ ```ssh``` into your server that you will be using for this tutorial
+
  1) Locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
 
   ```shell
@@ -50,18 +54,30 @@ How your Manifest file in Excel should look:
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors.
 
 
-
-
 ## Step 4: Load QIIME2 on MSI
 This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
 
 _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
-```
+```shell
 module load qiime2/2018.11
 ```
 ## Step 5: Import Manifest
- 1) import manifest and get sequences in .qza format
- 2) visualize imported reads Qiime  2 View
+Open up Filezilla (or other file sharing software) and connect to your desired server/remote site. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
+
+Next, convert your Manifest file into a QZA format. QZA and QZV files are QIIME2 artifacts and visualizations, respectively. To convert your Manifest file into a QZA format, run the ```qiime tools import``` command: 
+
+  ```
+  qiime tools import --type SampleData[PairedEndSequencesWithQuality] --input-path Manifest.csv --output-path demux.qza --input-format PairedEndFastqManifestPhred33
+  ```
+explain
+
+3) visualize imported reads Qiime  2 View
+
+```
+qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
+```
+explain
+
 ## Step : Analyze FastQC
 1) link to how to understand
 2)note how quality decreases with time
