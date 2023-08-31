@@ -47,9 +47,9 @@ How your Manifest file in Excel should look:
 
 <img width="488" alt="Manifest_Example_Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/ef7e8705-0fd5-4eaa-9ce2-a5adde515e63">
 
+Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors.
 
-
-Ensure that your manifest file has no extra spaces in the columns, otherwise you may run into errors when QIIME2 attempts to read the file. Please see full [Manifest file](url). Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click here.
+Ensure that your manifest file has no extra spaces between the columns, otherwise you may run into errors when QIIME2 attempts to read the file. Please see full [Manifest file](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example). Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click here.
 
 
 
