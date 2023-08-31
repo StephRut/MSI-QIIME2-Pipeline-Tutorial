@@ -42,8 +42,15 @@ Ex: ```/home/absolute/filepath/project_1```
 To determine what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads.
 R1 represents the forward read, and R2 represents the reverse.
 
-Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. This tutorial will continue forward using Excel. 
- do ls -l
+How your Manifest file in Excel should look:
+
+
+<img width="488" alt="Manifest_Example_Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/ef7e8705-0fd5-4eaa-9ce2-a5adde515e63">
+
+
+
+Ensure that your manifest file has no extra spaces in the columns, otherwise you may run into errors when QIIME2 attempts to read the file. Please see full [Manifest file](url). Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click here.
+
 
 
   1) Make Sure no Extra Space in Column
