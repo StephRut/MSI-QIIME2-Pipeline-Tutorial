@@ -30,7 +30,7 @@ Here we are copying 'project_1' directory into a new directory named 'project_1'
 _Format Dependent on QIIME Version Used_
 
 A manifest file is a file that maps each raw read file to a sample-id. Essentially, the manifest file associates all raw reads together and gives each read a ID.
-Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'absolute-filepath'**, and **'direction'**. 
+Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'absolute-filepath'**, and **'direction'**. Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click [here](url).
                
   _NOTE: Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!_
 
@@ -49,14 +49,9 @@ How your Manifest file in Excel should look:
 
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors.
 
-Ensure that your manifest file has no extra spaces between the columns, otherwise you may run into errors when QIIME2 attempts to read the file. Please see full [Manifest file](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example). Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click here.
 
 
 
-  1) Make Sure no Extra Space in Column
-  3) .csv file
-  4) Example of End Product
-  5) screenshot and link to example
 ## Step 4: Load QIIME2 on MSI
 This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
 
