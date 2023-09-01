@@ -14,7 +14,7 @@ link to what 16s v4 ITS ITS2 is
 
  ```ssh``` into your server that you will be using for this tutorial
 
-Locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
+Locate your raw read files (look for files ending in .fastq or .fastq.gz) and copy the directory (folder) containing your reads into a new directory
 
 ```shell
 cp -r project_1 ~/project_1
@@ -68,16 +68,20 @@ Next, convert your Manifest file into a QZA format. QZA and QZV files are QIIME2
   ```
   qiime tools import --type SampleData[PairedEndSequencesWithQuality] --input-path Manifest.csv --output-path demux.qza --input-format PairedEndFastqManifestPhred33
   ```
-explain
+[qiime tools import command explained](url)
 
-3) visualize imported reads Qiime  2 View
+Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV file. 
 
 ```
 qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
 ```
-explain
+[qiime demux summarize command explained](url)
 
 ## Step : Analyze FastQC
+
+Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads.
+
+FOR MSI USERS: Within the directory that you found your raw Fastq files in, follow the filepath ```analysis/illumina-basicQC```. Look over the file "report.html" This will take you to an Illumina BasicQC report. You should also view a few of the FastQC reports generated, which can be found by following ```analysis/illumina-basicQC/fastqc``` again, starting from the directory containing your raw Fastqc files.
 1) link to how to understand
 2)note how quality decreases with time
 ## Step 6: Trim Primers
