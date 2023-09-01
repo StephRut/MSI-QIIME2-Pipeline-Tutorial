@@ -14,19 +14,18 @@ link to what 16s v4 ITS ITS2 is
 
  ```ssh``` into your server that you will be using for this tutorial
 
- 1) Locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
+Locate your raw read files (look for files ending in .fastq) and copy the directory (folder) containing your reads into a new directory
 
-  ```shell
-  cp -r project_1 ~/project_1
-  ```
-
+```shell
+cp -r project_1 ~/project_1
+```
 Here we are copying 'project_1' directory into a new directory named 'project_1' in our home directory.
 
- 3) Next, create a new directory for analysis
+Next, create a new directory for analysis of your data
    
-    ```shell
-    mkdir project_1_analysis
-    ```
+```shell
+mkdir project_1_analysis
+```
     
 6)  find [batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler
 7)  link to MSI OnDemand
