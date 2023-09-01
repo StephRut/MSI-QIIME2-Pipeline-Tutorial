@@ -1,4 +1,4 @@
-# MSI_QIIME2_Pipeline_Tutorial
+# MSI QIIME2 Pipeline Tutorial
 This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
 
 _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
