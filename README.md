@@ -77,6 +77,8 @@ qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
 ```
 [qiime demux summarize command explained](url)
 
+Download the output QZV file onto your computer and upload the file into [QIIME 2 View]((https://view.qiime2.org/). This visualization is similar to the FastQC reports, except it takes into account all of your raw reads when determining the quality scores. Try to get familiar with the interactive quality plots in this visualization.
+
 ## Step : Analyze FastQC
 
 Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
@@ -94,7 +96,12 @@ FOR MSI USERS: Within the directory that you found your raw Fastq files in, foll
 For more information on FastQC files, view this [FastQC Basics Page](url)
 
 ## Step 6: Trim Primers
- 1) trimming forward and reverse primers
+For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F (Parada) - 806R (Apprill) primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
+```
+qiime cutadapt trim-paired --i-demultiplexed-sequences demux.qza --p-front-f GTGYCAGCMGCCGCGGTAA --p-front-r GGACTACNVGGGTWTCTAAT --p-overlap 10 --p-cores 20 --o-trimmed-sequences trimmed-seqs.qza 
+```
+Learn more about the ```qiime cutadapt trim-paired``` command [here](url). 
+
 ## Step : visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths, try to keep as much data as you can
 ## Step 7: Filter the Sequences
  4) know the length of the sequence you are targeting, if you trim too short, then there might not be enough overlap to merge the reads, in which case single end analysis would likely give better results
