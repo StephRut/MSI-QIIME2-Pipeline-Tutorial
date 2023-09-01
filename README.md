@@ -154,3 +154,5 @@ visualize the dada stats... make sure you aren't loosing too many reads ideally 
  3) open in excel
  4) analysis
 
+    [link](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/google28c0f62a2c89c942.html)
+
