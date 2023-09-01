@@ -77,7 +77,7 @@ qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
 ```
 [qiime demux summarize command explained](url)
 
-Download the output QZV file onto your computer and upload the file into [QIIME 2 View]((https://view.qiime2.org/). This visualization is similar to the FastQC reports, except it takes into account all of your raw reads when determining the quality scores. Try to get familiar with the interactive quality plots in this visualization.
+Download the output QZV file onto your computer and upload the file into [QIIME 2 View](https://view.qiime2.org/). This visualization is similar to the FastQC reports, except it takes into account all of your raw reads when determining the quality scores. Try to get familiar with the interactive quality plots in this visualization.
 
 ## Step : Analyze FastQC
 
