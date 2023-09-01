@@ -42,7 +42,7 @@ The absolute-filepath is the full path beginning from the root and ending with t
 
 Ex: ```/home/absolute/filepath/project_1```
 
-To determine what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads.
+To determine what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data.
 R1 represents the forward read, and R2 represents the reverse.
 
 How your Manifest file in Excel should look:
@@ -50,8 +50,7 @@ How your Manifest file in Excel should look:
 
 <img width="488" alt="Manifest_Example_Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/ef7e8705-0fd5-4eaa-9ce2-a5adde515e63">
 
-Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors.
-
+Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors. This tutorial will be working with paired-end data.
 
 ## Step 4: Load QIIME2 on MSI
 This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
@@ -63,21 +62,24 @@ module load qiime2/2018.11
 ## Step 5: Import Manifest
 Open up Filezilla (or other file sharing software) and connect to your desired server/remote site. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
 
-Next, convert your Manifest file into a QZA format. QZA and QZV files are QIIME2 artifacts and visualizations, respectively. To convert your Manifest file into a QZA format, run the ```qiime tools import``` command: 
-
+Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format using the ```qiime tools import``` command.
   ```
   qiime tools import --type SampleData[PairedEndSequencesWithQuality] --input-path Manifest.csv --output-path demux.qza --input-format PairedEndFastqManifestPhred33
   ```
-[qiime tools import command explained](url)
+Learn more about the ```qiime tools import``` command [here](url).
 
-Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV file. 
+Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV (QIIME 2 Visualization) file. 
 
 ```
 qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
 ```
-[qiime demux summarize command explained](url)
+Learn more about the ```qiime demux summarize``` command [here](url).
 
-Download the output QZV file onto your computer and upload the file into [QIIME 2 View](https://view.qiime2.org/). This visualization is similar to the FastQC reports, except it takes into account all of your raw reads when determining the quality scores. Try to get familiar with the interactive quality plots in this visualization.
+Download the output QZV file onto your computer and upload the file into [QIIME 2 View](https://view.qiime2.org/). This visualization is similar to the FastQC reports, except it takes into account all of your raw reads when determining the quality scores. 
+
+<img width="1007" alt="Demux Visualization Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/d5e3d6ba-3cc9-4d8d-a81e-5e465ce7d5b3">
+
+Try to get familiar with the interactive quality plots in this visualization.
 
 ## Step : Analyze FastQC
 
