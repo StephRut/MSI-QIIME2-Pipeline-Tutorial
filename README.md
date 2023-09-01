@@ -1,5 +1,7 @@
 # MSI_QIIME2_Pipeline_Tutorial
-Intro...
+This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
+
+_Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
 ## Step 1: Software Requirements
   1) File transfer Software like FileZilla (Cyberduck, etc.)
   2) Text Editor like Atom, Notepad++
@@ -53,9 +55,7 @@ How your Manifest file in Excel should look:
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors. This tutorial will be working with paired-end data.
 
 ## Step 4: Load QIIME2 on MSI
-This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
-
-_Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
+Load QIIME2 on your remote server.
 ```shell
 module load qiime2/2018.11
 ```
@@ -110,7 +110,9 @@ qiime demux summarize --i-data trimmed-seqs.qza --o-visualization trimmed-seqs.q
 
 Upload your trimmed sequences QZV file to QIIME 2 View to look at the quality of your reads. This visualization should look similar to the previous QIIME 2 visualization. The key difference is that your sequences should now be shorter in length. 
 
-In 16s data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics. 
+<img width="758" alt="before and after trimming length" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/971e2434-1e2e-4c69-8db5-00b27124f859">
+
+In 16s data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics, see Filtering Step. 
 
 ## Step 7: Filter the Sequences
  4) know the length of the sequence you are targeting, if you trim too short, then there might not be enough overlap to merge the reads, in which case single end analysis would likely give better results
