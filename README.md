@@ -83,17 +83,13 @@ Download the output QZV file onto your computer and upload the file into [QIIME 
 
 Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
 
-[FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-
-[Good FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html)
-
-[Bad FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
+[FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [Good FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html), [Bad FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
 
 Generally, the quality score of a base will decrease as the base position increases. It's also common to see the first 5-10 bases have a lower quality score than the bases following. 
 
 FOR MSI USERS: Within the directory that you found your raw Fastq files in, follow the filepath ```analysis/illumina-basicQC```. Look over the file "report.html" This will take you to an Illumina BasicQC report. You should also view a few of the FastQC reports generated, which can be found by following ```analysis/illumina-basicQC/fastqc``` again, starting from the directory containing your raw Fastqc files.
 
-For more information on FastQC files, view this [FastQC Basics Page](url)
+For more information on FastQC files, view the [FastQC Basics](url) file.
 
 ## Step 6: Trim Primers
 For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F (Parada) - 806R (Apprill) primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
@@ -102,13 +98,25 @@ qiime cutadapt trim-paired --i-demultiplexed-sequences demux.qza --p-front-f GTG
 ```
 Learn more about the ```qiime cutadapt trim-paired``` command [here](url). 
 
-## Step : visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths, try to keep as much data as you can
+Next, create a visualization summary of your trimmed sequences/reads.
+
+```
+qiime demux summarize --i-data trimmed-seqs.qza --o-visualization trimmed-seqs.qzv
+```
+
+## Step : Visualize Trimmed Reads
+
+Upload your trimmed sequences QZV file to QIIME 2 View to look at the quality of your reads. This visualization should look similar to the previous QIIME 2 visualization. The key difference is that your sequences should now be shorter in length. 
+
+In 16s data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics. 
+
 ## Step 7: Filter the Sequences
  4) know the length of the sequence you are targeting, if you trim too short, then there might not be enough overlap to merge the reads, in which case single end analysis would likely give better results
- 5) ideally, keep the median above q 30
- 6) explain what a quality score is 30
-7) explain EE
-8) explain p-trunc-q
+ 5) try to keep as much data as you can, find that sweet spot
+ 6) ideally, keep the median above q 30
+ 7) explain what a quality score is 30
+8) explain EE
+9) explain p-trunc-q
 
 ## Step :
 visualize the dada stats... make sure you aren't loosing too many reads ideally 70% recovery
