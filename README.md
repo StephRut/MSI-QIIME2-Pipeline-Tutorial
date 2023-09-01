@@ -79,11 +79,20 @@ qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
 
 ## Step : Analyze FastQC
 
-Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads.
+Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
+
+[FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+
+[Good FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html)
+
+[Bad FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
+
+Generally, the quality score of a base will decrease as the base position increases. It's also common to see the first 5-10 bases have a lower quality score than the bases following. 
 
 FOR MSI USERS: Within the directory that you found your raw Fastq files in, follow the filepath ```analysis/illumina-basicQC```. Look over the file "report.html" This will take you to an Illumina BasicQC report. You should also view a few of the FastQC reports generated, which can be found by following ```analysis/illumina-basicQC/fastqc``` again, starting from the directory containing your raw Fastqc files.
-1) link to how to understand
-2)note how quality decreases with time
+
+For more information on FastQC files, view this [FastQC Basics Page](url)
+
 ## Step 6: Trim Primers
  1) trimming forward and reverse primers
 ## Step : visualize results of trimming primers, look at the quality of your reads... this is how you will determine the trim and trunc lengths, try to keep as much data as you can
