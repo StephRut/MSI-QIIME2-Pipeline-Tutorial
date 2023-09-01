@@ -2,6 +2,7 @@
 This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
 
 _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
+
 ## Step 1: Software Requirements
   1) File transfer Software like FileZilla (Cyberduck, etc.)
   2) Text Editor like Atom, Notepad++
@@ -9,6 +10,7 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
   4) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
   5) Excel (GoogleSheets, etc.)
 link to what 16s v4 ITS ITS2 is
+
 ## Step 2: Connect to MSI Server
 **For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
 
@@ -63,15 +65,21 @@ module load qiime2/2018.11
 Open up Filezilla (or other file sharing software) and connect to your desired server/remote site. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
 
 Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format using the ```qiime tools import``` command.
-  ```
-  qiime tools import --type SampleData[PairedEndSequencesWithQuality] --input-path Manifest.csv --output-path demux.qza --input-format PairedEndFastqManifestPhred33
-  ```
+```
+qiime tools import \
+--type SampleData[PairedEndSequencesWithQuality] \
+--input-path Manifest_Example.csv \
+--output-path demux.qza \
+--input-format PairedEndFastqManifestPhred33
+```
 Learn more about the ```qiime tools import``` command [here](url).
 
 Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV (QIIME 2 Visualization) file. 
 
 ```
-qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
+qiime demux summarize \
+--i-data demux.qza \
+--o-visualization demux.qzv
 ```
 Learn more about the ```qiime demux summarize``` command [here](url).
 
@@ -96,14 +104,21 @@ For more information on FastQC files, view the [FastQC Basics](url) file.
 ## Step 6: Trim Primers
 For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F (Parada) - 806R (Apprill) primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
 ```
-qiime cutadapt trim-paired --i-demultiplexed-sequences demux.qza --p-front-f GTGYCAGCMGCCGCGGTAA --p-front-r GGACTACNVGGGTWTCTAAT --p-overlap 10 --p-cores 20 --o-trimmed-sequences trimmed-seqs.qza 
+qiime cutadapt trim-paired \
+--i-demultiplexed-sequences demux.qza \
+--p-front-f GTGYCAGCMGCCGCGGTAA \
+--p-front-r GGACTACNVGGGTWTCTAAT \
+--p-cores 20 \
+--o-trimmed-sequences trimmed-seqs.qza 
 ```
 Learn more about the ```qiime cutadapt trim-paired``` command [here](url). 
 
 Next, create a visualization summary of your trimmed sequences/reads.
 
 ```
-qiime demux summarize --i-data trimmed-seqs.qza --o-visualization trimmed-seqs.qzv
+qiime demux summarize \
+--i-data trimmed-seqs.qza \
+--o-visualization trimmed-seqs.qzv
 ```
 
 ## Step : Visualize Trimmed Reads
