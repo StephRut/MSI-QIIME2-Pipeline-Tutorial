@@ -139,6 +139,19 @@ The key here is to find the sweet spot where you keep as much data as you can, w
 
 Ideally, we want to keep the median quality score of the sequences equal to or above 30 or Q30. Meaning when we look at our last QIIME 2 Visualization, we will trim right before the first location in the sequence where the median is < 30. 
 
+To truncate the forward reads at 228 and the reverse at 180, use the ```qiime dada2 denoise-paired``` command
+
+```
+qiime dada2 denoise-paired \
+--i-demultiplexed-seqs trimmed-seqs.qza \
+--p-trunc-len-f 228 \
+--p-trunc-len-r 180 \
+--o-representative-sequences dada2-paired-end-rep-seqs.qza \
+--o-table dada2-paired-end-table.qza \
+--o-denoising-stats dada2-paired-end-stats.qza
+```
+Learn more about the ```qiime dada2 denoise-paired``` command [here](url).
+
  What is a quality score? 
 
 According to Illumina, a quality score represents the probability that the base "read" in the sequence is erroneous, i.e., not accurately representive of what the actual base of the biological sequence is.[<sup>Illumina</sup>](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.) The higher the quality score, the lower the probability of the base being an error. 
@@ -151,8 +164,23 @@ ITS:
 8) explain EE
 9) explain p-trunc-q
 
-## Step :
-visualize the dada stats... make sure you aren't loosing too many reads ideally 70% recovery
+## Step : Visualize the Denoising Stats
+To visualize the denoising stats, run the ```qiime metadata tabulate``` command.
+
+```
+qiime metadata tabulate \
+--m-input-file dada2-paired-end-stats.qza \
+--o-visualization dada2-paired-end-stats.qzv
+```
+
+View the QZV stats file in QIIME 2 View, download the .tsv, and open it in Excel to calculate the recovery. 
+Your .csv file should look similar to this: 
+
+<img width="325" alt="denoise stats" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/eb09e44c-f702-41a5-88ca-d707652512b2">
+
+To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through the filtering stage by taking the sum of the filtered over the sum of the input. 
+
+make sure you aren't loosing too many reads ideally 70% recovery
 
 ## Step 8: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
