@@ -130,10 +130,18 @@ Upload your trimmed sequences QZV file to QIIME 2 View to look at the quality of
 In 16s data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics, see Filtering Step. 
 
 ## Step 7: Filter the Sequences
- 4) know the length of the sequence you are targeting, if you trim too short, then there might not be enough overlap to merge the reads, in which case single end analysis would likely give better results
- 5) try to keep as much data as you can, find that sweet spot
- 6) ideally, keep the median above q 30
+If you are filtering ITS data, see [Filtering ITS](url) page.
+
+For 16s rRNA data, especcially paired-end reads, it is important to know the length of the sequences you are targeting. **(LOOK FOR ARTICLE GIVING ROUGH LENGTH OF V4 REGION HERE)**
+If you trim paired-end reads too short, then there might not be enough of an overlap to merge the reads. On the other hand, if the quality scores are too low on the end of your reads, the data is less likely to be an accurate representation of what species are present in your sample. If your paired-end reads must be trimmed short due to low quality reads towards the end of the sequence, it might be best to analyze the forwards sequences as single-end reads instead.
+
+The key here is to find the sweet spot where you keep as much data as you can, without sacrificing the quality of the data.
+
+Ideally, we want to keep the median quality score of the sequences equal to or above 30 or q30. Meaning when we look at our last QIIME 2 Visualization, we will trim right before the first location in the sequence where the median is < 30. 
+
  7) explain what a quality score is 30
+
+ITS:
 8) explain EE
 9) explain p-trunc-q
 
