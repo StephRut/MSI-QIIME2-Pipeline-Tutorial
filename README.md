@@ -174,13 +174,13 @@ qiime metadata tabulate \
 ```
 
 View the QZV stats file in QIIME 2 View, download the .tsv, and open it in Excel to calculate the recovery. 
-Your .csv file should look similar to this: 
+Your .tsv file should look similar to this: 
 
 <img width="325" alt="denoise stats" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/eb09e44c-f702-41a5-88ca-d707652512b2">
 
-To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through the filtering stage by taking the sum of the filtered over the sum of the input. 
+To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through the filtering stage by taking the sum of the filtered over the sum of the input. Find the percent for each column. Ideally, you want at least a 70% recovery, or 70% of the reads are non-chimeric. 
 
-make sure you aren't loosing too many reads ideally 70% recovery
+[Denoise Stats Example](url)
 
 ## Step 8: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
