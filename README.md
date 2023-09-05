@@ -180,7 +180,7 @@ Your .tsv file should look similar to this:
 
 To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through the filtering stage by taking the sum of the filtered over the sum of the input. Find the percent for each column. Ideally, you want at least a 70% recovery, or 70% of the reads are non-chimeric. 
 
-[Denoise Stats Example](url)
+[Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv)
 
 ## Step 8: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
