@@ -172,6 +172,7 @@ qiime metadata tabulate \
 --m-input-file dada2-paired-end-stats.qza \
 --o-visualization dada2-paired-end-stats.qzv
 ```
+Learn more about the ```qiime metadata tabulate``` command [here](url).
 
 View the QZV stats file in QIIME 2 View, download the .tsv, and open it in Excel to calculate the recovery. 
 Your .tsv file should look similar to this: 
@@ -181,6 +182,10 @@ Your .tsv file should look similar to this:
 To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through the filtering stage by taking the sum of the filtered over the sum of the input. Find the percent for each column. Ideally, you want at least a 70% recovery, or 70% of the reads are non-chimeric. 
 
 [Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv)
+
+If not enough reads are passing the filtering step, 
+
+If not enough reads are passing the merging step,
 
 ## Step 8: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
