@@ -9,16 +9,16 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
   3) Terminal such as Command Prompt, Windows Powershell
   4) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
   5) Excel (GoogleSheets, etc.)
-link to what 16s v4 ITS ITS2 is
+link to what 16S v4 ITS ITS2 is
 
 ## Step 2: Connect to MSI Server
 **For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
 
  _Take note of File Commands and Directory Navigation_
 
- ```ssh``` into your server that you will be using for this tutorial
+ If using a remote server, ```ssh``` into the server that you will be using for this tutorial.
 
-Locate your raw read files (look for files ending in .fastq or .fastq.gz) and copy the directory (folder) containing your reads into a new directory
+Locate your raw read files (look for files ending in .fastq or .fastq.gz) and copy the directory (folder) containing your reads into a new directory, preferably in your home directory. 
 
 ```shell
 cp -r project_1 ~/project_1
@@ -31,8 +31,8 @@ Next, create a new directory for analysis of your data
 mkdir project_1_analysis
 ```
     
-6)  find [batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler
-7)  link to MSI OnDemand
+_find a place to put ([batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler info)_
+
 ## Step 3: Creating a Manifest File
 _Format Dependent on QIIME Version Used_
 
@@ -57,14 +57,14 @@ How your Manifest file in Excel should look:
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors. This tutorial will be working with paired-end data.
 
 ## Step 4: Load QIIME2 on MSI
-Load QIIME2 on your remote server.
+Load QIIME2 on the remote server.
 ```shell
 module load qiime2/2018.11
 ```
 ## Step 5: Import Manifest
-Open up Filezilla (or other file sharing software) and connect to your desired server/remote site. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
+Open up Filezilla (or other file sharing software) and connect to the remote server. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
 
-Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format using the ```qiime tools import``` command.
+Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format.
 ```
 qiime tools import \
 --type SampleData[PairedEndSequencesWithQuality] \
@@ -89,7 +89,7 @@ Download the output QZV file onto your computer and upload the file into [QIIME 
 
 Try to get familiar with the interactive quality plots in this visualization.
 
-## Step : Analyze FastQC
+## Step 6 : Analyze FastQC
 
 Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
 
@@ -101,8 +101,8 @@ FOR MSI USERS: Within the directory that you found your raw Fastq files in, foll
 
 For more information on FastQC files, view the [FastQC Basics](url) file.
 
-## Step 6: Trim Primers
-For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F (Parada) - 806R (Apprill) primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
+## Step 7: Trim Primers
+For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
 ```
 qiime cutadapt trim-paired \
 --i-demultiplexed-sequences demux.qza \
@@ -121,25 +121,24 @@ qiime demux summarize \
 --o-visualization trimmed-seqs.qzv
 ```
 
-## Step : Visualize Trimmed Reads
+## Step 8: Visualize Trimmed Reads
 
 Upload your trimmed sequences QZV file to QIIME 2 View to look at the quality of your reads. This visualization should look similar to the previous QIIME 2 visualization. The key difference is that your sequences should now be shorter in length. 
 
 <img width="758" alt="before and after trimming length" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/971e2434-1e2e-4c69-8db5-00b27124f859">
 
-In 16s data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics, see Filtering Step. 
+In 16S data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics, see Filtering Step. 
 
-## Step 7: Filter the Sequences
+## Step 9: Filter the Sequences
 If you are filtering ITS data, see [Filtering ITS](url) page.
 
-For 16s rRNA data, especcially paired-end reads, it is important to know the length of the sequences you are targeting. **(LOOK FOR ARTICLE GIVING ROUGH LENGTH OF V4 REGION HERE)**
-If you trim paired-end reads too short, then there might not be enough of an overlap to merge the reads. On the other hand, if the quality scores are too low on the end of your reads, the data is less likely to be an accurate representation of what species are present in your sample. If your paired-end reads must be trimmed short due to low quality reads towards the end of the sequence, it might be best to analyze the forwards sequences as single-end reads instead.
+For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al. [(2022)](https://doi.org/10.1007/s00284-022-02956-9), the V4 region of 16S rRNA is approximately 250 base pairs in length. The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 20 base pairs. Therefore, you will want to set truncation lengths such that a 20 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
 
-The key here is to find the sweet spot where you keep as much data as you can, without sacrificing the quality of the data.
+If the quality scores are too low on the ends of your reads, the data is less likely to be an accurate representation of what species are present in your sample. If your paired-end reads must be trimmed or truncated short due to low quality reads towards the ends of the sequences, it might be best to analyze the forwards sequences as single-end reads instead. The key here is to find the sweet spot where you keep as much data as you can, without sacrificing the quality of the data.
 
 Ideally, we want to keep the median quality score of the sequences equal to or above 30 or Q30. Meaning when we look at our last QIIME 2 Visualization, we will trim right before the first location in the sequence where the median is < 30. 
 
-To truncate the forward reads at 228 and the reverse at 180, use the ```qiime dada2 denoise-paired``` command
+To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command.
 
 ```
 qiime dada2 denoise-paired \
@@ -150,22 +149,26 @@ qiime dada2 denoise-paired \
 --o-table dada2-paired-end-table.qza \
 --o-denoising-stats dada2-paired-end-stats.qza
 ```
+Here we truncated the forward reads at 228 and the reverse at 180.
+
 Learn more about the ```qiime dada2 denoise-paired``` command [here](url).
 
- What is a quality score? 
+**What is a Quality Score?**
 
 According to Illumina, a quality score represents the probability that the base "read" in the sequence is erroneous, i.e., not accurately representive of what the actual base of the biological sequence is.[<sup>Illumina</sup>](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.) The higher the quality score, the lower the probability of the base being an error. 
 
- [<img width="471" alt="quality score illumina" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/3403e7c8-1582-4cd2-88fa-64ab06123954">](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.)
+ <img width="471" alt="quality score illumina" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/3403e7c8-1582-4cd2-88fa-64ab06123954">
 
-Keeping median quality scores above 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
+**Image Source:** [https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.)
+
+Keeping median quality scores greater than or equal to 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
 
 ITS:
 8) explain EE
 9) explain p-trunc-q
 
-## Step : Visualize the Denoising Stats
-To visualize the denoising stats, run the ```qiime metadata tabulate``` command.
+## Step 10: Visualize the Denoising Stats
+A crucial step in this pipeline is visualizing the denoising stats.
 
 ```
 qiime metadata tabulate \
@@ -179,27 +182,25 @@ Your .tsv file should look similar to this:
 
 <img width="325" alt="denoise stats" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/eb09e44c-f702-41a5-88ca-d707652512b2">
 
-To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through the filtering stage by taking the sum of the filtered over the sum of the input. Find the percent for each column. Ideally, you want at least a 70% recovery, or 70% of the reads are non-chimeric. 
+To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through each stage by taking the sum of the individual columns C-F over the sum of the input column.  Ideally, you want at least a 70% recovery, or 70% of the reads are non-chimeric. 
 
-[Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv)
+For further reference, view the [Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv).
 
-If not enough reads are passing the filtering step, 
+If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as [maxEE](url) or [truncQ](url). 
+If not enough reads are passing the merging step, your reads may not be long enough to have a 20 base pair overlap. Consider analyzing single-end reads instead. If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads. 
 
-If not enough reads are passing the merging step,
-
-## Step 8: Training the Classifier
+## Step 11: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
- 2) Link both of them on the page
  3) make characters uppercase to avoid downstream errors
  4) 99 sequences .fasta to .qza
  5) 99 taxonomy .txt to .qza
  6) train classifier code
  7) Learn the classifier (i believe 16s you trim to V4 region) but in ITS its best not to do trimming
-## Step 9: Building ASV Table with Taxonomy
+## Step 12: Building ASV Table with Taxonomy
  1) create taxa feature table (ASV)
  2) convert taxa table into .txt
  3) open in excel
  4) analysis
 
-    [link](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/google28c0f62a2c89c942.html)
+
 
