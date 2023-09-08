@@ -9,7 +9,8 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
   3) Terminal such as Command Prompt, Windows Powershell
   4) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
   5) Excel (GoogleSheets, etc.)
-link to what 16S v4 ITS ITS2 is
+
+(link to what 16S v4 ITS ITS2 is)
 
 ## Step 2: Connect to MSI Server
 **For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
@@ -163,9 +164,9 @@ According to Illumina, a quality score represents the probability that the base 
 
 Keeping median quality scores greater than or equal to 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
 
-ITS:
+(ITS:
 8) explain EE
-9) explain p-trunc-q
+9) explain p-trunc-q)
 
 ## Step 10: Visualize the Denoising Stats
 A crucial step in this pipeline is visualizing the denoising stats.
