@@ -3,12 +3,22 @@ This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of f
 
 _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
 
-## Step 1: Software Requirements
+## Step 1: Getting Started
+ ### Software Requirements 
   1) File transfer Software like FileZilla (Cyberduck, etc.)
   2) Text Editor like Atom, Notepad++
-  3) Terminal such as Command Prompt, Windows Powershell
+  3) Terminal such as Command Prompt or Windows Powershell (Windows), Terminal (Mac)
   4) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
   5) Excel (GoogleSheets, etc.)
+
+  ### Command Line
+  Windows Users: Navigate to the start application in the bottom left-hand side of the screen and search for either Command Prompt or Windows Powershell. Click and open this application. 
+  Mac Users: Navigate to the search spotlight in the upper right-hand side of the screen and search for Terminal.app. Click and open this application.
+
+(Insert screenshots here).
+
+This is your terminal. It might look a little different to what you're used to applications you're used to, but dont fret! Your terminal is command-line interface (CLI), meaning you type commands (and hit return/enter) to interact with your computer. 
+  
 
 (link to what 16S v4 ITS ITS2 is)
 
