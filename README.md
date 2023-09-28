@@ -20,7 +20,7 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
 (Insert screenshots here).
 
 
-<img src="https://github.com/StephRut/Images-for-Github/blob/main/Command%20Prompt.jpg" width=800 target="_blank">
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Command%20Prompt.jpg" width=800>
 
 ![Command Prompt](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/1f2c4bb9-e204-4adb-afd8-5cf6bdad5e0e)
 
@@ -46,6 +46,7 @@ The system will then ask you to enter your password. No text will show up on the
 
 _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os) page for more information._
 
+<a href="https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os" target="_blank">Connecting to HPC</a>
 (Insert screen shot of what this should look like when connected to MSI successfully).
 
 ### Finding the Sequencing Data
