@@ -19,11 +19,11 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
 
 (Insert screenshots here).
 
+![Command Prompt](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/1f2c4bb9-e204-4adb-afd8-5cf6bdad5e0e)
+
+
 This is your terminal. It might look a little different to what you're used to applications you're used to, but dont fret! Your terminal is command-line interface (CLI), meaning you type commands (and hit return/enter) to interact with your computer. 
   
-
-(link to what 16S v4 ITS ITS2 is)
-
 ## Step 2: Connect to MSI Server and Locate the Data
 **For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
 ### Connecting to MSI
