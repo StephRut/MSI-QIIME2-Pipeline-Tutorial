@@ -20,7 +20,7 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
 (Insert screenshots here).
 
 
-<img src="https://github.com/StephRut/Images-for-Github/blob/main/Command%20Prompt.jpg" width=800 target=_blank>
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Command%20Prompt.jpg" width=800 target="_blank">
 
 ![Command Prompt](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/1f2c4bb9-e204-4adb-afd8-5cf6bdad5e0e)
 
