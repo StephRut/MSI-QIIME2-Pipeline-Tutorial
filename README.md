@@ -33,7 +33,9 @@ If you are working remotely, i.e, not connected to the eduroam WiFi on campus, y
 
 Open up your Cisco AnyConnect application and connect to the U of M Full-Tunnel VPN. Once connected, navigate to your terminal application type:
 
-```ssh x500@mesabi.msi.umn.edu```
+```
+ssh x500@mesabi.msi.umn.edu
+```
 
 Don't forget to press enter!
 
@@ -46,6 +48,10 @@ _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-
 ### Finding the Sequencing Data
 
 Locate your raw read files (look for files ending in .fastq or .fastq.gz) and copy the directory (folder) containing your reads into a new directory, preferably in your home directory. 
+
+```
+/home/gomeza/shared/GitHub_Tutorial/16s_data
+```
 
 ```shell
 cp -r project_1 ~/project_1
