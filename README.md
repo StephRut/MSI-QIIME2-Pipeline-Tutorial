@@ -1,19 +1,21 @@
 # MSI QIIME2 Pipeline Tutorial
-This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using.
+This tutorial will be based on QIIME2 Version 2018.11. Commands and formats of files may change depending on the version of QIIME2 you are using. 
 
 _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.org/2018.11/index.html)._
 
 ## Step 1: Getting Started
  ### Software Requirements 
   1) File transfer Software like FileZilla (Cyberduck, etc.)
-  2) Text Editor like Atom, Notepad++
-  3) Terminal such as Command Prompt or Windows Powershell (Windows), Terminal (Mac)
-  4) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
-  5) Excel (GoogleSheets, etc.)
+  2) Duo Authentication
+  3) Text Editor like Atom, Notepad++
+  4) Terminal such as Command Prompt or Windows Powershell (Windows), Terminal (Mac)
+  5) Citrix to connect to servers else where(Cisco Anyconnect, etc.)
+  6) Excel (GoogleSheets, etc.)
 
   ### Command Line
-  Windows Users: Navigate to the start application in the bottom left-hand side of the screen and search for either Command Prompt or Windows Powershell. Click and open this application. 
-  Mac Users: Navigate to the search spotlight in the upper right-hand side of the screen and search for Terminal.app. Click and open this application.
+  **Windows Users:** Navigate to the start application in the bottom left-hand side of the screen and search for either Command Prompt or Windows Powershell. Click and open this application. 
+  
+  **Mac Users:** Navigate to the search spotlight in the upper right-hand side of the screen and search for Terminal.app. Click and open this application.
 
 (Insert screenshots here).
 
@@ -22,12 +24,26 @@ This is your terminal. It might look a little different to what you're used to a
 
 (link to what 16S v4 ITS ITS2 is)
 
-## Step 2: Connect to MSI Server
+## Step 2: Connect to MSI Server and Locate the Data
 **For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
-
+### Connecting to MSI
  _Take note of File Commands and Directory Navigation_
 
- If using a remote server, ```ssh``` into the server that you will be using for this tutorial.
+If you are working remotely, i.e, not connected to the eduroam WiFi on campus, you're going to need to use a VPN to acsess the MSI servers. This is where Cisco AnyConnect comes in!
+
+Open up your Cisco AnyConnect application and connect to the U of M Full-Tunnel VPN. Once connected, navigate to your terminal application type:
+
+```ssh x500@mesabi.msi.umn.edu```
+
+Don't forget to press enter!
+
+The system will then ask you to enter your password. No text will show up on the screen when entering in your password. Enter your password as normal, and hit enter again. This should take you to a Duo Authentication screen. The first time you connect to MSI, the system will ask if you want to cache the server fingerprint. Type 'yes' and then hit enter.
+
+_See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os) page for more information._
+
+(Insert screen shot of what this should look like when connected to MSI successfully).
+
+### Finding the Sequencing Data
 
 Locate your raw read files (look for files ending in .fastq or .fastq.gz) and copy the directory (folder) containing your reads into a new directory, preferably in your home directory. 
 
@@ -44,7 +60,7 @@ mkdir project_1_analysis
     
 _find a place to put ([batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler info)_
 
-## Step 3: Creating a Manifest File
+## Step 3: Create a Manifest File
 _Format Dependent on QIIME Version Used_
 
 A manifest file is a file that maps each raw read file to a sample-id. Essentially, the manifest file associates all raw reads together and gives each read a ID.
