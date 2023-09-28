@@ -46,7 +46,7 @@ The system will then ask you to enter your password. No text will show up on the
 
 _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os) page for more information._
 
-<a href="https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os" target="_blank">Connecting to HPC</a>
+<a href="https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os" target="_blank">"Connecting to HPC"</a>
 (Insert screen shot of what this should look like when connected to MSI successfully).
 
 ### Finding the Sequencing Data
