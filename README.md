@@ -101,6 +101,8 @@ module load qiime2/2018.11
 ## Step 5: Import Manifest
 Open up Filezilla (or other file sharing software) and connect to the remote server. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
 
+**(Put in how to connect and interact wiht filezilla here as well as a screen shot)**
+
 Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format.
 ```
 qiime tools import \
