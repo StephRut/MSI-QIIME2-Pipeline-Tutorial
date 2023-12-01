@@ -80,6 +80,11 @@ to list the directories and files within your home directory. Make sure you see 
 ls -l 16s_Tutorial
 ```
 
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/16s%20home%20directory.jpg" width=600 height=400>
+
+Your terminal should look a little something like this ^^ :) 
+
+
 Next, create a new directory for analysis of your data within your home directory:
    
 ```shell
