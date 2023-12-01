@@ -83,7 +83,7 @@ Next, create a new directory for analysis of your data:
 mkdir 16s_Tutorial_Analysis
 ```
     
-_find a place to put ([batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler info)_
+
 
 ## Step 3: Create a Manifest File
 _Format Dependent on QIIME Version Used_
@@ -108,15 +108,15 @@ How your Manifest file in Excel should look:
 
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors. This tutorial will be working with paired-end data.
 
-## Step 4: Load QIIME2 on MSI
+## Step 4: Import Manifest
+Open up Filezilla (or other file sharing software) and connect to the remote server. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
+
+**(Put in how to connect and interact wiht filezilla here as well as a screen shot)**
+
 Load QIIME2 on the remote server.
 ```shell
 module load qiime2/2018.11
 ```
-## Step 5: Import Manifest
-Open up Filezilla (or other file sharing software) and connect to the remote server. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
-
-**(Put in how to connect and interact wiht filezilla here as well as a screen shot)**
 
 Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format.
 ```
@@ -143,19 +143,8 @@ Download the output QZV file onto your computer and upload the file into [QIIME 
 
 Try to get familiar with the interactive quality plots in this visualization.
 
-## Step 6 : Analyze FastQC
 
-Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
-
-[FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [Good FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html), [Bad FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
-
-Generally, the quality score of a base will decrease as the base position increases. It's also common to see the first 5-10 bases have a lower quality score than the bases following. 
-
-FOR MSI USERS: Within the directory that you found your raw Fastq files in, follow the filepath ```analysis/illumina-basicQC```. Look over the file "report.html" This will take you to an Illumina BasicQC report. You should also view a few of the FastQC reports generated, which can be found by following ```analysis/illumina-basicQC/fastqc``` again, starting from the directory containing your raw Fastqc files.
-
-For more information on FastQC files, view the [FastQC Basics](url) file.
-
-## Step 7: Trim Primers
+## Step 5: Trim Primers
 For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
 ```
 qiime cutadapt trim-paired \
@@ -174,6 +163,20 @@ qiime demux summarize \
 --i-data trimmed-seqs.qza \
 --o-visualization trimmed-seqs.qzv
 ```
+
+## Step 6 : Analyze FastQC
+
+Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
+
+[FastQC documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [Good FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html), [Bad FastQC data](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
+
+Generally, the quality score of a base will decrease as the base position increases. It's also common to see the first 5-10 bases have a lower quality score than the bases following. 
+
+FOR MSI USERS: Within the directory that you found your raw Fastq files in, follow the filepath ```analysis/illumina-basicQC```. Look over the file "report.html" This will take you to an Illumina BasicQC report. You should also view a few of the FastQC reports generated, which can be found by following ```analysis/illumina-basicQC/fastqc``` again, starting from the directory containing your raw Fastqc files.
+
+For more information on FastQC files, view the [FastQC Basics](url) file.
+
+
 
 ## Step 8: Visualize Trimmed Reads
 
