@@ -17,15 +17,14 @@ _Documentation for QIIME2 Ver. 2018.11 can be found [here](https://docs.qiime2.o
   
   **Mac Users:** Navigate to the search spotlight in the upper right-hand side of the screen and search for Terminal.app. Click and open this application.
 
-(Insert screenshots here).
+
 
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/Command%20Prompt.jpg" width=800>
 
-![Command Prompt](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/1f2c4bb9-e204-4adb-afd8-5cf6bdad5e0e)
 
 
-This is your terminal. It might look a little different to what you're used to applications you're used to, but dont fret! Your terminal is command-line interface (CLI), meaning you type commands (and hit return/enter) to interact with your computer. 
+This is your terminal. It might look a little different to what you're used to applications you're used to, but don't fret! Your terminal is command-line interface (CLI), meaning you type commands (and hit return/enter) to interact with your computer. 
   
 ## Step 2: Connect to MSI Server and Locate the Data
 **For Beginners, use a linux [Cheat Sheet](https://phoenixnap.com/kb/wp-content/uploads/2022/03/linux-commands-cheat-sheet-pnap.pdf)** 
@@ -47,15 +46,24 @@ The system will then ask you to enter your password. No text will show up on the
 _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os) page for more information._
 
 <a href="https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os" target="_blank">"Connecting to HPC"</a>
-(Insert screen shot of what this should look like when connected to MSI successfully).
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/succesful_connection.jpg" width=800 height=300>
 
 ### Finding the Sequencing Data
 
-Locate your raw read files (look for files ending in .fastq or .fastq.gz) and copy the directory (folder) containing your reads into a new directory, preferably in your home directory. 
+Locate the raw read files (look for files ending in .fastq or .fastq.gz).
 
+What is a filepath? Good question! This is essentially the directions to the folder or directory that you are currently located in in the file system. Take a look at your current file path. This can be found in brackets [] immediately after x500@ln####. After connecting to MSI your file path should be `[~]`. The "~" symbol represents your home or user directory. 
+
+
+
+In this tutorial, the file will be found at the file path below.
 ```
-/home/gomeza/shared/GitHub_Tutorial/16s_data
+/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036
 ```
+
+and copy the directory (folder) containing your reads into a new directory, preferably in your home directory. 
+
 
 ```shell
 cp -r project_1 ~/project_1
