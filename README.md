@@ -60,15 +60,12 @@ The **"/"** symbols are used for separation between directories. The **'Gomez_Pr
 ```
 cd /home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036
 ```
-make sure to have a space between **cd** and the file path. To return to your home directory, you can always type: `cd ~` 
+Make sure to have a space between **cd** and the file path. To return to your home directory, you can always type: `cd ~` 
 
-again making sure to have a space between **cd** and **~**.
+Again ensure you have a space between **cd** and **~**.
 
-Let's copy the **'Gomez_Project_036'** directory (and all of its contents) into a new directory within our home directory. We'll call this directory **'16s_Tutorial'**. In order to copy the **'Gomez_Project_036'** directory we will need to go up one directory. This can be achieved by entering the following command:
+Let's copy the **'Gomez_Project_036'** directory (and all of its contents) into a new directory within our home directory. We'll call this directory **'16s_Tutorial'**. In order to copy the **'Gomez_Project_036'** directory we will need to go up one directory. This can be achieved by entering the following command: `cd ..`
 
-```
-cd ..
-```
 
 To copy the **'Gomez_Project_036'** directory into a new directory within our home directory named **'16s_Tutorial'**, enter the following command:
 
@@ -76,8 +73,14 @@ To copy the **'Gomez_Project_036'** directory into a new directory within our ho
 cp -r Gomez_Project_036 ~/16s_Tutorial
 ```
 
+To check that you've successfully made the new directory in your home directory, return to your home directory. Once you're in your home directory, enter: `ls -l`
+to list the directories and files within your home directory. Make sure you see the **'16s_Tutorial'** directory! Next, check that the **'16s_Tutorial'** directory contains the raw reads (.fastq.qz) by entering:
 
-Next, create a new directory for analysis of your data:
+```
+ls -l 16s_Tutorial
+```
+
+Next, create a new directory for analysis of your data within your home directory:
    
 ```shell
 mkdir 16s_Tutorial_Analysis
@@ -96,7 +99,7 @@ Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'ab
 The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id).
 The absolute-filepath is the full path beginning from the root and ending with the directory/file you are specifying. No matter which directory you are in, an absolute filepath will always specify the same directory/file. In MSI, the absolute filepath will begin with ```/home```.
 
-Ex: ```/home/absolute/filepath/project_1```
+Ex: ```/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036```
 
 To determine what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data.
 R1 represents the forward read, and R2 represents the reverse.
