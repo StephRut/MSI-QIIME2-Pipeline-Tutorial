@@ -45,35 +45,42 @@ The system will then ask you to enter your password. No text will show up on the
 
 _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os) page for more information._
 
-<a href="https://www.msi.umn.edu/content/connecting-hpc-resources#connecting-to-msi-with-windows-os" target="_blank">"Connecting to HPC"</a>
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/succesful_connection.jpg" width=800 height=300>
 
 ### Finding the Sequencing Data
 
-Locate the raw read files (look for files ending in .fastq or .fastq.gz).
+Locate the raw read files (look for files ending in .fastq or .fastq.gz). In this tutorial, the files will be found at the file path: `/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036`
 
-What is a filepath? Good question! This is essentially the directions to the folder or directory that you are currently located in in the file system. Take a look at your current file path. This can be found in brackets [] immediately after x500@ln####. After connecting to MSI your file path should be `[~]`. The "~" symbol represents your home or user directory. 
+What is a filepath? Good question! This is essentially the directions to the folder or directory that you are currently located in in the file system. Take a look at your current file path. This can be found in brackets [] immediately after x500@ln####. After connecting to MSI your file path should be `[~]`. The **"~"** symbol represents your home or user directory. 
 
 
+The **"/"** symbols are used for separation between directories. The **'Gomez_Project_036'** directory is within the **'16s_data'** directory which is in the **'GitHub_Tutorial'** directory, and so on. The last listed directory in the file path, **'Gomez_Project_036'** in this case, is the directory that you are currently in, a.k.a. the parent directory. To navigate to the **'Gomez_Project_036'** directory listed in the file path above, type the following command in your terminal and press enter:
 
-In this tutorial, the file will be found at the file path below.
 ```
-/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036
+cd /home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036
+```
+make sure to have a space between **cd** and the file path. To return to your home directory, you can always type: `cd ~` 
+
+again making sure to have a space between **cd** and **~**.
+
+Let's copy the **'Gomez_Project_036'** directory (and all of its contents) into a new directory within our home directory. We'll call this directory **'16s_Tutorial'**. In order to copy the **'Gomez_Project_036'** directory we will need to go up one directory. This can be achieved by entering the following command:
+
+```
+cd ..
 ```
 
-and copy the directory (folder) containing your reads into a new directory, preferably in your home directory. 
-
+To copy the **'Gomez_Project_036'** directory into a new directory within our home directory named **'16s_Tutorial'**, enter the following command:
 
 ```shell
-cp -r project_1 ~/project_1
+cp -r Gomez_Project_036 ~/16s_Tutorial
 ```
-Here we are copying 'project_1' directory into a new directory named 'project_1' in our home directory.
 
-Next, create a new directory for analysis of your data
+
+Next, create a new directory for analysis of your data:
    
 ```shell
-mkdir project_1_analysis
+mkdir 16s_Tutorial_Analysis
 ```
     
 _find a place to put ([batch files](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Batch%20Script.md) and Slurm scheduler info)_
