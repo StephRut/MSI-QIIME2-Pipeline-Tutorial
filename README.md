@@ -52,7 +52,7 @@ _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-
 
 Locate the raw read files (look for files ending in .fastq or .fastq.gz). In this tutorial, the files will be found at the file path: `/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036`
 
-What is a filepath? Good question! This is essentially the directions to the folder or directory that you are currently located in in the file system. Take a look at your current file path. This can be found in brackets [] immediately after x500@ln####. After connecting to MSI your file path should be `[~]`. The **"~"** symbol represents your home or user directory. 
+What is a filepath? Good question! This is essentially the directions to the folder or directory that you are currently located in in the file system. Take a look at your current file path. This can be found in brackets [ ] immediately after x500@ln####. After connecting to MSI your file path should be `[~]`. The **"~"** symbol represents your home or user directory. 
 
 
 The **"/"** symbols are used for separation between directories. The **'Gomez_Project_036'** directory is within the **'16s_data'** directory which is in the **'GitHub_Tutorial'** directory, and so on. The last listed directory in the file path, **'Gomez_Project_036'** in this case, is the directory that you are currently in, a.k.a. the parent directory. To navigate to the **'Gomez_Project_036'** directory listed in the file path above, type the following command in your terminal and press enter:
@@ -82,7 +82,7 @@ ls -l 16s_Tutorial
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/16s%20home%20directory.jpg" width=600 height=400>
 
-Your terminal should look a little something like this ^^ :) 
+Your terminal should look a little something like this ⬆
 
 
 Next, create a new directory for analysis of your data within your home directory:
@@ -94,12 +94,12 @@ mkdir 16s_Tutorial_Analysis
 
 
 ## Step 3: Create a Manifest File
-_Format Dependent on QIIME Version Used_
+_Format Dependent on QIIME Version Used_ 
 
 A manifest file is a file that maps each raw read file to a sample-id. Essentially, the manifest file associates all raw reads together and gives each read a ID.
 Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'absolute-filepath'**, and **'direction'**. Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click [here](url).
                
-  _NOTE: Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!_
+ ⚠️ _NOTE: Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!_ 
 
 The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id).
 The absolute-filepath is the full path beginning from the root and ending with the directory/file you are specifying. No matter which directory you are in, an absolute filepath will always specify the same directory/file. In MSI, the absolute filepath will begin with ```/home```.
