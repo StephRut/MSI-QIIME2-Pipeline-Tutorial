@@ -101,15 +101,25 @@ Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'ab
                
  ⚠️ _NOTE: Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!_ 
 
+ Your file should look like this: 
+
+ <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel_1.png" width=250 height=125>
+
+Next, we want to get the list of reads from MSI using the terminal. In step 2, you should have listed out the contents of the **'16s_Tutorial'** directory in your terminal. Highlight all of these files and copy them. In excel, create a new sheet and paste these file into the first column. 
+
+ <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel_2.png" width=500 height=420>
+
 The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id). In this tutorial, our samples will have both forward and reverse reads, also called paired end reads.
 
 
 The absolute-filepath is the full path beginning from the root and ending with the directory/file you are specifying. No matter which directory you are in, an absolute filepath will always specify the same directory/file. In MSI, the absolute filepath will begin with ```/home```.
 
-Ex: ```/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036```
+Ex: ```/home/gomeza/rutsc011/16s_Tutorial```
 
-To determine what your absolute filepath will be, use the ```pwd``` command. The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data.
-R1 represents the forward read, and R2 represents the reverse.
+To determine what your absolute filepath will be, use the ```pwd``` command. 
+
+
+The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data. R1 represents the forward read, and R2 represents the reverse.
 
 How your Manifest file in Excel should look:
 
