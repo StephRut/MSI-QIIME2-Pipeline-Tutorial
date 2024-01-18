@@ -97,11 +97,13 @@ mkdir 16s_Tutorial_Analysis
 _Format Dependent on QIIME Version Used_ 
 
 A manifest file is a file that maps each raw read file to a sample-id. Essentially, the manifest file associates all raw reads together and gives each read a ID.
-Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'absolute-filepath'**, and **'direction'**. Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. For an more information on creating a manifest file in Excel, click [here](url).
+Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'absolute-filepath'**, and **'direction'**. Manifest files can be made in whatever program you feel most comfortable with, as long as you can save the file as a .csv. This tutorial will be using Excel to make the manifest file. 
                
  ⚠️ _NOTE: Ensure that your column headers are spelled correctly, otherwise you may run into errors later on!_ 
 
-The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id).
+The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id). In this tutorial, our samples will have both forward and reverse reads, also called paired end reads.
+
+
 The absolute-filepath is the full path beginning from the root and ending with the directory/file you are specifying. No matter which directory you are in, an absolute filepath will always specify the same directory/file. In MSI, the absolute filepath will begin with ```/home```.
 
 Ex: ```/home/gomeza/shared/GitHub_Tutorial/16s_data/Gomez_Project_036```
