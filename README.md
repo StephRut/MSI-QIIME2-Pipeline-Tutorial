@@ -84,6 +84,14 @@ ls -l 16s_Tutorial
 
 Your terminal should look a little something like this ⬆
 
+To list only the file names and directory names use:
+
+```
+ls 16s_Tutorial -1 
+```
+
+
+Copy all of the reads listed. This will be used later on!
 
 Next, create a new directory for analysis of your data within your home directory:
    
