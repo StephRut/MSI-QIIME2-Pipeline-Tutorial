@@ -181,8 +181,6 @@ Verify that the protocol is SFTP, the host is mesabi.msi.umn.edu, the port is 22
 Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'**.
 
 
-
-
 ## Step 5: Visualize Demultiplexed Sequences and Trim Primers
 
 Load QIIME2 on the remote server.
@@ -198,7 +196,7 @@ qiime tools import \
 --output-path demux.qza \
 --input-format PairedEndFastqManifestPhred33
 ```
-
+###### maybe remove ---------------------------------------------------------------------------------------------------------
 
 Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV (QIIME 2 Visualization) file. 
 
@@ -215,7 +213,10 @@ Download the output QZV file onto your computer and upload the file into [QIIME 
 
 Try to get familiar with the interactive quality plots in this visualization.
 
-For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
+###### through here ------------------------------------------------------
+
+
+For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for the PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: _GTGYCAGCMGCCGCGGTAA_ and reverse primer: _GGACTACNVGGGTWTCTAAT_
 ```
 qiime cutadapt trim-paired \
 --i-demultiplexed-sequences demux.qza \
@@ -224,7 +225,6 @@ qiime cutadapt trim-paired \
 --p-cores 20 \
 --o-trimmed-sequences trimmed-seqs.qza 
 ```
-Learn more about the ```qiime cutadapt trim-paired``` command [here](url). 
 
 Next, create a visualization summary of your trimmed sequences/reads.
 
@@ -233,6 +233,10 @@ qiime demux summarize \
 --i-data trimmed-seqs.qza \
 --o-visualization trimmed-seqs.qzv
 ```
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Trimmed%20Seq%20Vis.png">
+
+Our data was trimmed to 301 nucleotides when we received it. Therefore, if the primers were trimmed, the sequences lengths' should be ~280 nucleotides long. Verify this by checking the sequence length summary at the bottom of the interactive quality plot page.
 
 ## Step 6 : Analyze FastQC
 
