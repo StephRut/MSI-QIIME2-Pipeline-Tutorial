@@ -180,6 +180,11 @@ Verify that the protocol is SFTP, the host is mesabi.msi.umn.edu, the port is 22
 
 Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'**.
 
+
+
+
+## Step 5: Visualize Demultiplexed Sequences and Trim Primers
+
 Load QIIME2 on the remote server.
 ```shell
 module load qiime2/2018.11
@@ -189,7 +194,7 @@ Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format.
 ```
 qiime tools import \
 --type SampleData[PairedEndSequencesWithQuality] \
---input-path Manifest_Example.csv \
+--input-path Manifest.csv \
 --output-path demux.qza \
 --input-format PairedEndFastqManifestPhred33
 ```
@@ -210,8 +215,6 @@ Download the output QZV file onto your computer and upload the file into [QIIME 
 
 Try to get familiar with the interactive quality plots in this visualization.
 
-
-## Step 5: Trim Primers
 For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: GTGYCAGCMGCCGCGGTAA and reverse primer: GGACTACNVGGGTWTCTAAT
 ```
 qiime cutadapt trim-paired \
