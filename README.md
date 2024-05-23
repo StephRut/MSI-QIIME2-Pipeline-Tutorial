@@ -190,7 +190,7 @@ Load QIIME2 on the remote server.
 module load qiime2/2018.11
 ```
 
-Next, convert your Manifest file into a QZA (QIIME 2 Artifact) format.
+Next, within the **'16s_Tutorial_Analysis'** directory, your convert your Manifest file into a QZA (QIIME 2 Artifact) format.
 ```
 qiime tools import \
 --type SampleData[PairedEndSequencesWithQuality] \
@@ -198,7 +198,7 @@ qiime tools import \
 --output-path demux.qza \
 --input-format PairedEndFastqManifestPhred33
 ```
-Learn more about the ```qiime tools import``` command [here](url).
+
 
 Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV (QIIME 2 Visualization) file. 
 
@@ -207,9 +207,9 @@ qiime demux summarize \
 --i-data demux.qza \
 --o-visualization demux.qzv
 ```
-Learn more about the ```qiime demux summarize``` command [here](url).
 
-Download the output QZV file onto your computer and upload the file into [QIIME 2 View](https://view.qiime2.org/). This visualization is similar to the FastQC reports, except it takes into account all of your raw reads when determining the quality scores. 
+
+Download the output QZV file onto your computer and upload the file into [QIIME 2 View](https://view.qiime2.org/). This visualization is similar to the FastQC reports. 
 
 <img width="1007" alt="Demux Visualization Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/d5e3d6ba-3cc9-4d8d-a81e-5e465ce7d5b3">
 
