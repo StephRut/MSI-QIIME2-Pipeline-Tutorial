@@ -274,8 +274,8 @@ To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paire
 ```
 qiime dada2 denoise-paired \
 --i-demultiplexed-seqs trimmed-seqs.qza \
---p-trunc-len-f 228 \
---p-trunc-len-r 180 \
+--p-trunc-len-f 231 \
+--p-trunc-len-r 185 \
 --o-representative-sequences dada2-paired-end-rep-seqs.qza \
 --o-table dada2-paired-end-table.qza \
 --o-denoising-stats dada2-paired-end-stats.qza
