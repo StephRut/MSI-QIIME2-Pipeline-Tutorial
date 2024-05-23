@@ -89,7 +89,7 @@ To list only the file names and directory names use:
 ```
 ls 16s_Tutorial -1 
 ```
-
+<img src="https://github.com/StephRut/Images-for-Github/blob/f9366f0166d03f16fbbf818162661ab1e0b6938f/ls%20-1.png" width=300 height=400>
 
 Copy all of the reads listed. This will be used later on!
 
@@ -113,18 +113,30 @@ Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'ab
 
  <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel_1.png" width=250 height=125>
 
-Next, we want to get the list of reads from MSI using the terminal. In step 2, you should have listed out the contents of the **'16s_Tutorial'** directory in your terminal. Highlight all of these files and copy them. In excel, create a new sheet and paste these file into the first column. 
+Next, we want to get the list of reads from MSI using the terminal. In step 2, you should have listed out and copied the names of the reads in the **'16s_Tutorial'** directory in your terminal. In excel, create a new sheet and paste these file into the first column. 
 
- <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel_2.png" width=500 height=420>
+ <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel%20file%20list.png" width=210 height=380>
 
 The sample-ids can be whatever you want them to be so long as they are unique from each other (except when you have forward and reverse reads, in which case there should be two of each sample-id). In this tutorial, our samples will have both forward and reverse reads, also called paired end reads.
+
+To isolate our sample-ids we will manipulate the text using Excel functions. In column B, type ```=TEXTBEFORE(A1,"_S") ```, which will ouput all text in cell A1 that precedes "_S". Your output should be "316D14". Click on the lower right-hand side of the box and drag down the formula to the bottom row. 
+
+ <img src="https://github.com/StephRut/Images-for-Github/blob/main/generate%20sample%20ids.png" width=240 height=380>
+
+Copy and paste the sample-ids into the sample-ids column of your manifest file. 
+
+In your terminal, navigate into the **'16s_Tutorial'** directory using 'cd'. 
+
+
 
 
 The absolute-filepath is the full path beginning from the root and ending with the directory/file you are specifying. No matter which directory you are in, an absolute filepath will always specify the same directory/file. In MSI, the absolute filepath will begin with ```/home```.
 
 Ex: ```/home/gomeza/rutsc011/16s_Tutorial```
 
-To determine what your absolute filepath will be, use the ```pwd``` command. 
+To determine what your absolute filepath will be, first navigate to the **'16s_Tutorial'** directory in the terminal. Then use the ```pwd``` command. 
+
+ <img src="https://github.com/StephRut/Images-for-Github/blob/main/pwd.png" width=520, height=37>
 
 
 The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data. R1 represents the forward read, and R2 represents the reverse.
