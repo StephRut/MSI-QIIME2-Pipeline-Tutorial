@@ -164,6 +164,7 @@ Copy the F column and paste it into the direction column of the manifest.
 
 How your Manifest file in Excel should look:
 
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Manifest%20Example%20Trim%202.1.png" width=488>
 
 <img width="488" alt="Manifest_Example_Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/ef7e8705-0fd5-4eaa-9ce2-a5adde515e63">
 
