@@ -113,7 +113,7 @@ Your manifest file will have 3 columns, with the headers: **'sample-id'**, **'ab
 
  <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel_1.png" width=250 height=125>
 
-Next, we want to get the list of reads from MSI using the terminal. In step 2, you should have listed out and copied the names of the reads in the **'16s_Tutorial'** directory in your terminal. In excel, create a new sheet and paste these file into the first column. 
+Next, we want to get the list of reads from MSI using the terminal. In step 2, you should have listed out and copied the names of the reads in the **'16s_Tutorial'** directory in your terminal. In excel, create a new sheet 'Editing Sheet' and paste these file into the first column. 
 
  <img src="https://github.com/StephRut/Images-for-Github/blob/main/excel%20file%20list.png" width=210 height=380>
 
@@ -125,7 +125,6 @@ To isolate our sample-ids we will manipulate the text using Excel functions. In 
 
 Copy and paste the sample-ids into the sample-ids column of your manifest file. 
 
-In your terminal, navigate into the **'16s_Tutorial'** directory using 'cd'. 
 
 
 
@@ -137,6 +136,16 @@ Ex: ```/home/gomeza/rutsc011/16s_Tutorial```
 To determine what your absolute filepath will be, first navigate to the **'16s_Tutorial'** directory in the terminal. Then use the ```pwd``` command. 
 
  <img src="https://github.com/StephRut/Images-for-Github/blob/main/pwd.png" width=520, height=37>
+
+Copy and paste the filepath into C1 of the Editing sheet in Excel and drag down to the last row.
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/file%20path%20beginning.png" width=430 height=380>
+
+This is the first part of our absolute filepath. Now we just need to add the text from column C and column A together, separated by a '/'. In column D type ```=TEXTJOIN("/",TRUE,C1,A1)```, which joins achieves this merge. Again, pull down the formula to the bottom row. This is our absolute-filepath. 
+
+
+
+Copy and paste column D into the absolute-file column of the manifest.
 
 
 The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data. R1 represents the forward read, and R2 represents the reverse.
