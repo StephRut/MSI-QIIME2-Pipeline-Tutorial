@@ -172,9 +172,13 @@ Before uploading your final Manifest file to QIIME2, ensure that your file looks
 Hint: Make sure to check that the cells in Excel are populating correctly to avoid errors later on. 
 
 ## Step 4: Import Manifest
-Open up Filezilla (or other file sharing software) and connect to the remote server. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
+Open up Filezilla (or other file sharing software) and connect to the remote server. To do this, click 'file' in the upper lefthand corner of the screen, and 'site manager' in the pull down list. Your screen should look like this:
 
-**(Put in how to connect and interact wiht filezilla here as well as a screen shot)**
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Filezilla%20Site%20Manager.png" width=900 height=450>
+
+Verify that the protocol is SFTP, the host is mesabi.msi.umn.edu, the port is 22, the logon type is interactive and that your user is correct (x500). Press connect and enter your password used logging in to MSI. The local site (your computer) will be on the left and the remote site (MSI) will be on the right. Locate and click on the **'16s_Tutorial_Analysis'** directory on MSI and the Manifest file on your computer. Drag your manifest file over to the empty directory box on the bottom right of the screen.
+
+Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'**.
 
 Load QIIME2 on the remote server.
 ```shell
