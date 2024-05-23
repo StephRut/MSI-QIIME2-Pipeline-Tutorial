@@ -151,6 +151,15 @@ Copy and paste column D into the absolute-file column of the manifest.
 
 Lastly, the direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data. R1 represents the forward read, and R2 represents the reverse.
 
+To assign forward vs. reverse we will isolate the text to the right of 'L001_' in our read files. In column E of the Editing sheet type ```=TEXTAFTER(A1,"L001_")``` and press enter. E1 should now begin with 'R1'. Pull down this formula to the bottom row. 
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Read%20direction%201.png" width=880 height=380>
+
+Then, in F1 we will type ```=IF(E1 = "R1_001.fastq.gz", "forward", "reverse")``` and pull down. This function is stating that if cell E1 is 'R1_001.fastq.gz', then it will populate the cell with 'forward'. If E1 does not match 'R1_001.fastq.gz', then it will populate with 'reverse'. 
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/direction%20part%202.png" width=935 height=380>
+
+Copy the F column and paste it into the direction column of the manifest.
 
 
 How your Manifest file in Excel should look:
@@ -159,6 +168,8 @@ How your Manifest file in Excel should look:
 <img width="488" alt="Manifest_Example_Screenshot" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/ef7e8705-0fd5-4eaa-9ce2-a5adde515e63">
 
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors. This tutorial will be working with paired-end data.
+
+Hint: Make sure to check that the cells in Excel are populating correctly to avoid errors later on. 
 
 ## Step 4: Import Manifest
 Open up Filezilla (or other file sharing software) and connect to the remote server. Locate your Manifest file and transfer it over to the remote server in the directory you made previously for analysis. 
