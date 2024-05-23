@@ -143,12 +143,15 @@ Copy and paste the filepath into C1 of the Editing sheet in Excel and drag down 
 
 This is the first part of our absolute filepath. Now we just need to add the text from column C and column A together, separated by a '/'. In column D type ```=TEXTJOIN("/",TRUE,C1,A1)```, which joins achieves this merge. Again, pull down the formula to the bottom row. This is our absolute-filepath. 
 
-
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/absolute-filepath.png" width=800 height=380>
 
 Copy and paste column D into the absolute-file column of the manifest.
 
 
-The direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data. R1 represents the forward read, and R2 represents the reverse.
+
+Lastly, the direction of the read will be either 'forward' or 'reverse'. Again, spelling matters! Check to see if your raw reads have both R1 and R2 in their names. If so, you have both forward and reverse reads or paired-end data. R1 represents the forward read, and R2 represents the reverse.
+
+
 
 How your Manifest file in Excel should look:
 
