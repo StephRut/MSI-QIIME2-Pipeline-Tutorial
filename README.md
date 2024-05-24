@@ -181,7 +181,7 @@ Verify that the protocol is SFTP, the host is mesabi.msi.umn.edu, the port is 22
 Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'** directory.
 
 
-## Step 5: Visualize Demultiplexed Sequences and Trim Primers
+## Step 5: Trim Primers and Visualize Sequences
 
 Load QIIME2 in the directory you are working in.
 ```shell
@@ -231,6 +231,8 @@ We will take the output file 'trimmed-seq.qzv' and transfer it over to our local
 You can zoom in on the plots by clicking and dragging a rectangle over the area you want to see closer. Try to get familiar with the interactive quality plots in this visualization.
 Our data was trimmed to 301 nucleotides when we received it. Therefore, if the primers were trimmed, the sequences lengths' should be ~280 nucleotides long. Verify this by checking the sequence length summary at the bottom of the interactive quality plot page.
 
+For 16S data, the quality of your reads will determine the lengths where you should trim (removing bases from the start) and truncate (removing bases from the end) the sequences. For ITS data, it is generally recommended to filter your data using different metrics, see Filtering step.
+
 ## Step 6 : Analyze FastQC
 
 Analyzing the quality of your raw data can be crucial during the QIIME2 pipeline as poor quality reads might necessitate tweaking the steps you take in the pipeline. If you have a FastQC report on your samples, please take the time to assess the overall quality of your reads. 
@@ -244,25 +246,19 @@ FOR MSI USERS: Within the directory that you found your raw Fastq files in, foll
 For more information on FastQC files, view the [FastQC Basics](url) file.
 
 
-
-## Step 8: Visualize Trimmed Reads
-
-Upload your trimmed sequences QZV file to QIIME 2 View to look at the quality of your reads. This visualization should look similar to the previous QIIME 2 visualization. The key difference is that your sequences should now be shorter in length. 
-
-<img width="758" alt="before and after trimming length" src="https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/assets/125623174/971e2434-1e2e-4c69-8db5-00b27124f859">
-
-In 16S data, the quality of your reads will determine the lengths where you should trim and truncate the sequences. In ITS data, it is generally recommended to filter your data using different metrics, see Filtering Step. 
-
-## Step 9: Filter the Sequences
+## Step 7: Filter the Sequences
 If you are filtering ITS data, see [Filtering ITS](url) page.
 
-For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al. [(2022)](https://doi.org/10.1007/s00284-022-02956-9), the V4 region of 16S rRNA is approximately 250 base pairs in length. The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 20 base pairs. Therefore, you will want to set truncation lengths such that a 20 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
+For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al. [(2022)](https://doi.org/10.1007/s00284-022-02956-9), the V4 region of 16S rRNA is approximately 250 base pairs in length. The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 12 base pairs. Therefore, you will want to set truncation lengths such that a 12 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
 
 If the quality scores are too low on the ends of your reads, the data is less likely to be an accurate representation of what species are present in your sample. If your paired-end reads must be trimmed or truncated short due to low quality reads towards the ends of the sequences, it might be best to analyze the forwards sequences as single-end reads instead. The key here is to find the sweet spot where you keep as much data as you can, without sacrificing the quality of the data.
 
 Ideally, we want to keep the median quality score of the sequences equal to or above 30 or Q30. Meaning when we look at our last QIIME 2 Visualization, we will trim right before the first location in the sequence where the median is < 30. 
 
-To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command.
+
+To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command. Our input is 'trimmed-seq.qza' and we will have 3 outputs. After reviewing the interactive quality plots, the forward reads stay at or above Q30 until base number 231 so we will trim there. The reverse reads stay at or above Q30 until 185. 
+
+Note: You may now have to load in Qiime2/2023.2 using the ```module load``` command.
 
 ```
 qiime dada2 denoise-paired \
@@ -273,9 +269,8 @@ qiime dada2 denoise-paired \
 --o-table dada2-paired-end-table.qza \
 --o-denoising-stats dada2-paired-end-stats.qza
 ```
-Here we truncated the forward reads at 228 and the reverse at 180.
 
-Learn more about the ```qiime dada2 denoise-paired``` command [here](url).
+
 
 **What is a Quality Score?**
 
@@ -291,7 +286,7 @@ Keeping median quality scores greater than or equal to 30 means that we are keep
 8) explain EE
 9) explain p-trunc-q)
 
-## Step 10: Visualize the Denoising Stats
+## Step 8: Visualize the Denoising Stats
 A crucial step in this pipeline is visualizing the denoising stats.
 
 ```
@@ -313,14 +308,14 @@ For further reference, view the [Denoise Stats Example](https://github.com/Steph
 If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as [maxEE](url) or [truncQ](url). 
 If not enough reads are passing the merging step, your reads may not be long enough to have a 20 base pair overlap. Consider analyzing single-end reads instead. If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads. 
 
-## Step 11: Training the Classifier
+## Step 9: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
  3) make characters uppercase to avoid downstream errors
  4) 99 sequences .fasta to .qza
  5) 99 taxonomy .txt to .qza
  6) train classifier code
  7) Learn the classifier (i believe 16s you trim to V4 region) but in ITS its best not to do trimming
-## Step 12: Building ASV Table with Taxonomy
+## Step 10: Building ASV Table with Taxonomy
  1) create taxa feature table (ASV)
  2) convert taxa table into .txt
  3) open in excel
