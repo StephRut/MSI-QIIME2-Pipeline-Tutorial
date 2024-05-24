@@ -178,17 +178,17 @@ Open up Filezilla (or other file sharing software) and connect to the remote ser
 
 Verify that the protocol is SFTP, the host is mesabi.msi.umn.edu, the port is 22, the logon type is interactive and that your user is correct (x500). Press connect and enter your password used logging in to MSI. The local site (your computer) will be on the left and the remote site (MSI) will be on the right. Locate and click on the **'16s_Tutorial_Analysis'** directory on MSI and the Manifest file on your computer. Drag your manifest file over to the empty directory box on the bottom right of the screen.
 
-Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'**.
+Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'** directory.
 
 
 ## Step 5: Visualize Demultiplexed Sequences and Trim Primers
 
-Load QIIME2 on the remote server.
+Load QIIME2 in the directory you are working in.
 ```shell
 module load qiime2/2018.11
 ```
 
-Next, within the **'16s_Tutorial_Analysis'** directory, your convert your Manifest file into a QZA (QIIME 2 Artifact) format.
+Next, within the **'16s_Tutorial_Analysis'** directory, convert your Manifest file into QZA (QIIME 2 Artifact) format. The input file ' Manifest.csv' is the manifest file that we just moved into MSI and the output 'demux.qza' will be a file  of demultiplexed sequences. 
 ```
 qiime tools import \
 --type SampleData[PairedEndSequencesWithQuality] \
@@ -196,6 +196,8 @@ qiime tools import \
 --output-path demux.qza \
 --input-format PairedEndFastqManifestPhred33
 ```
+
+Now we want to trim the PCR Primers.
 ###### maybe remove ---------------------------------------------------------------------------------------------------------
 
 Visualize a summary of your QZA file of demultiplexed sequences by converting it into a QZV (QIIME 2 Visualization) file. 
@@ -216,7 +218,9 @@ Try to get familiar with the interactive quality plots in this visualization.
 ###### through here ------------------------------------------------------
 
 
-For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the same sequences that were specified for the PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: _GTGYCAGCMGCCGCGGTAA_ and reverse primer: _GGACTACNVGGGTWTCTAAT_
+For 16S data, the process of trimming primmers is fairly straight forward. For ITS data, please view the [Trimming ITS Primer](url) file. The forward and reverse primers are the sequences that were specified for the PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: _GTGYCAGCMGCCGCGGTAA_ and reverse primer: _GGACTACNVGGGTWTCTAAT_
+Using the output file 'demux.qza' from the previous command as our input we can trim the primers. '--p-front-f' specifies the forward primer (primer used on forward reads) and '--p-front-r' specifies the reverse primer (primer used on reverse reads). The space following these parameters can.
+To trim these primers we type:
 ```
 qiime cutadapt trim-paired \
 --i-demultiplexed-sequences demux.qza \
