@@ -294,16 +294,20 @@ qiime metadata tabulate \
 ```
 
 View the QZV stats file in QIIME 2 View download the .tsv, and open it in Excel to calculate the recovery. 
-Your .tsv file should look similar to this: 
 
-<img width="325" alt="denoise stats" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/eb09e44c-f702-41a5-88ca-d707652512b2">
 
 To calculate recovery, find the sum of the input, filtered, denoised, merged and non-chimeric columns. Then determine the percentage of reads that made it through each stage by taking the sum of the individual columns (e.g., filtered, denoised, merged or non-chimeric) over the sum of the input column. One can also average the percentage columns to get an estimate of the recovery for each stage (whichever method you prefer). Ideally, you want at least a 70% recovery, or 70% of the total input reads passed through the non-chimeric stage. 
+Your .tsv file should look similar to this: 
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/Denoise%20stats_1.png">
 
 For further reference, view the [Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv).
 
 If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as [maxEE](url) or [truncQ](url). 
-If not enough reads are passing the merging step, your reads may not be long enough to have a 12 base pair overlap. Consider analyzing single-end reads instead. If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads or that the truncation lengths are too long. 
+If not enough reads are passing the merging step, your reads may not be long enough to have a 12 base pair overlap. Consider analyzing single-end reads instead. 
+If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads or that the truncation lengths are too long. 
+
+In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. [HOW TO DO SINGLE-END ANALYSIS**]
 
 ## Step 9: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
