@@ -301,7 +301,7 @@ Your .tsv file should look similar to this:
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/Denoise%20stats_1.png">
 
-For further reference, view the [Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv).
+
 
 If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as [maxEE](url) or [truncQ](url). 
 If not enough reads are passing the merging step, your reads may not be long enough to have a 12 base pair overlap. Consider analyzing single-end reads instead. 
