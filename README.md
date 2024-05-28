@@ -310,29 +310,96 @@ If a large percentage of reads do not make it past the non-chimeric reads, this 
 In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. [HOW TO DO SINGLE-END ANALYSIS**]
 
 ## Step 9: Training the Classifier
+### Greengenes2
 Now we will download the Greengenes2 database. Green genes 2 is a relatively new bacterial database, but has been found to increase reproducibility between studies. [Greengenes2 unifies microbial data in a single reference tree](https://www.nature.com/articles/s41587-023-01845-1)
-First we must install the greengenes2 Qiime2 plugin.
+First we must install the greengenes2 Qiime2 plugin. Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
+```
+pip install q2-greengenes2
+```
+Next, we want to download the 16S sequences and taxonomy using the following commands respectively:
+```
+wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-length.fna.qza
+wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
+```
 
+```
+qiime greengenes2 non-v4-16s --i-table dada2-paired-end-table.qza --i-sequences dada2-paired-end-rep-seqs.qza --i-backbone 2022.10.backbone.full-length.fna.qza --p-threads 12 --o-mapped-table gg2-feature-table.biom.qza --o-representatives gg2-rep-tips.fna.qza
+```
+```
+qiime greengenes2 taxonomy-from-table --i-reference-taxonomy 2022.10.taxonomy.asv.nwk.qza --i-table gg2-feature-table.biom.qza --o-classification gg2.taxonomy.qza
+```
+
+```
+qiime taxa collapse --i-table gg2-feature-table.biom.qza --i-taxonomy gg2.taxonomy.qza --p-level 7 --o-collapsed-table collapsed_table.qza
+```
+Then we want to unpack the contents of the file 'collapsed_table.qza':
+```
+unzip collapsed_table.qza
+```
+This should create a directory of the unzipped contents from the 'collapsed_table.qza' file. The directory will have a long and random name, so feel free to rename it by typing:
+```
+mv [insert long random name directory here] collapsed_table
+```
+When putting the long directory name in the command above, do not place brackets around it.
+
+Navigate to the 'collapsed_table' directory and then the 'data' direcotry within. You will see a 'feature-table.biom' file. We need to convert this file to a tsv format so that it is readable by programs like Excell. This can be achieved by typing:
+
+```
+biom convert -i feature-table.biom -o feature_table.txt --to-tsv
+```
+Now the output file 'feature_table.txt' is ready to be moved to your local computer using Filezilla! When opened in Excell, 'feature_table.txt' should look like this:
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/ASV_Table.png">
+
+This is your ASV Table. All we have to do is analyze and we're done!
+
+
+
+
+
+### Greengenes
 First , we will download greengenes 13_5 database using:
 
-``` wget https://gg-sg-web.s3-us-west-2.amazonaws.com/downloads/greengenes_database/gg_13_5/gg_13_5_otus.tar.gz```
+``` 
+wget https://gg-sg-web.s3-us-west-2.amazonaws.com/downloads/greengenes_database/gg_13_5/gg_13_5_otus.tar.gz
+```
 
 Then to untar the tar file we use:
-```tar -xf gg_13_5_otus.tar.gz```
+```
+tar -xf gg_13_5_otus.tar.gz
+```
 
 This has already been done for you within the /home/gomeza/shared/GitHub_Tutorial directory. The untared file is now the 'gg_13_5_otus' directory. 
 
-```qiime tools import --type 'FeatureData[Sequence]' --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/rep_set/99_otus.fasta --output-path ~/16s_Tutorial_Analysis/99_otus.qza```
+```
+qiime tools import --type 'FeatureData[Sequence]' --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/rep_set/99_otus.fasta --output-path ~/16s_Tutorial_Analysis/99_otus.qza
+```
 
-```qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt --output-path ~/16s_Tutorial_Analysis/ref-taxonomy.qza```
+```
+qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt --output-path ~/16s_Tutorial_Analysis/ref-taxonomy.qza
+```
 
-```qiime feature-classifier extract-reads --i-sequences 99_otus.qza --p-f-primer GTGYCAGCMGCCGCGGTAA --p-r-primer GGACTACNVGGGTWTCTAAT --o-reads ref-seqs.qza```
+To target the V4 regions while training the classifier we type:
 
-```qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ref-seqs.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier.qza```
+```
+qiime feature-classifier extract-reads --i-sequences 99_otus.qza --p-f-primer GTGYCAGCMGCCGCGGTAA --p-r-primer GGACTACNVGGGTWTCTAAT --o-reads ref-seqs.qza
+```
+*Note: this step will take a while so write a shell script with your text editor Atom and schedule the job with [Slurm](https://msi.umn.edu/our-resources/knowledge-base/slurm-job-submission-and-scheduling) on MSI. Then transfer the shell script file with filezilla as before. If using a Windows computer you must convert the files format to be compatible with Linux. Run the command: ```dos2unix [insert file here]``` on the shell script file. Then run ```sbatch [insert file here]``` to queue the job. 
 
-```qiime feature-classifier classify-sklearn --i-classifier classifier.qza --i-reads dada2-paired-end-rep-seqs6.qza --o-classification taxonomy.qza```
+------------------add shell script used to speed up job here---------------------
 
-```qiime taxa collapse --i-table dada2-paired-end-table.qza --i-taxonomy taxonomy.qza --p-level 7 --o-collapsed-table collapsed_tablegg1.qza```
+This step may also take some time
+```
+qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ref-seqs.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier.qza
+```
+------------------add shell script used ---------------------
+```
+qiime feature-classifier classify-sklearn --i-classifier classifier.qza --i-reads dada2-paired-end-rep-seqs6.qza --p-n-jobs 12  --o-classification taxonomy.qza
+```
+
+```
+qiime taxa collapse --i-table dada2-paired-end-table6.qza --i-taxonomy taxonomy.qza --p-level 7 --o-collapsed-table collapsed_tablegg1.qza
+```
 
 
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
@@ -341,11 +408,10 @@ This has already been done for you within the /home/gomeza/shared/GitHub_Tutoria
  5) 99 taxonomy .txt to .qza
  6) train classifier code
  7) Learn the classifier (i believe 16s you trim to V4 region) but in ITS its best not to do trimming
-## Step 10: Building ASV Table with Taxonomy
- 1) create taxa feature table (ASV)
- 2) convert taxa table into .txt
- 3) open in excel
- 4) analysis
+ 8)create taxa feature table (ASV)
+ 9) convert taxa table into .txt
+ 10) open in excel
+ 11) analysis
 
 
 
