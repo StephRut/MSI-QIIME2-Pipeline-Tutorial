@@ -322,16 +322,17 @@ Then to untar the tar file we use:
 
 This has already been done for you within the /home/gomeza/shared/GitHub_Tutorial directory. The untared file is now the 'gg_13_5_otus' directory. 
 
-```qiime tools import --type 'FeatureData[Sequence]' --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/rep_set/99_otus.fasta --output-path ~/Gomez_Project_036/99_otus.qza```
+```qiime tools import --type 'FeatureData[Sequence]' --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/rep_set/99_otus.fasta --output-path ~/16s_Tutorial_Analysis/99_otus.qza```
 
-qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path ~/Gomez_Project_036/gg_13_5/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt --output-path ~/Gomez_Project_036/ref-taxonomy.qza
+```qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt --output-path ~/16s_Tutorial_Analysis/ref-taxonomy.qza```
 
-qiime feature-classifier extract-reads --i-sequences ~/Gomez_Project_036/99_otus.qza --p-f-primer GTGYCAGCMGCCGCGGTAA --p-r-primer GGACTACNVGGGTWTCTAAT --o-reads ~/Gomez_Project_036/ref-seqs.qza
+```qiime feature-classifier extract-reads --i-sequences 99_otus.qza --p-f-primer GTGYCAGCMGCCGCGGTAA --p-r-primer GGACTACNVGGGTWTCTAAT --o-reads ref-seqs.qza```
 
-qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ~/Gomez_Project_036/ref-seqs.qza --i-reference-taxonomy ~/Gomez_Project_036/ref-taxonomy.qza --o-classifier ~/Gomez_Project_036/classifier.qza
+```qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ref-seqs.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier.qza```
 
-qiime feature-classifier classify-sklearn --i-classifier ~/Gomez_Project_036/classifier.qza --i-reads ~/Gomez_Project_036/rep-seqs.qza --o-classification ~/Gomez_Project_036/taxonomy.qza
+```qiime feature-classifier classify-sklearn --i-classifier classifier.qza --i-reads dada2-paired-end-rep-seqs6.qza --o-classification taxonomy.qza```
 
+```qiime taxa collapse --i-table dada2-paired-end-table.qza --i-taxonomy taxonomy.qza --p-level 7 --o-collapsed-table collapsed_tablegg1.qza```
 
 
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
