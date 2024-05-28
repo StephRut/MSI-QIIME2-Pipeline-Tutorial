@@ -246,7 +246,8 @@ FOR MSI USERS: Within the directory that you found your raw Fastq files in, foll
 For more information on FastQC files, view the [FastQC Basics](url) file.
 
 
-## Step 7: Filter the Sequences
+## Step 7: Filter, Denoise and Visualize the Sequences
+### Filtering and Denoising the Sequences
 If you are filtering ITS data, see [Filtering ITS](url) page.
 
 For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al. [(2022)](https://doi.org/10.1007/s00284-022-02956-9), the V4 region of 16S rRNA is approximately 250 base pairs in length. The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 12 base pairs. Therefore, you will want to set truncation lengths such that a 12 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
@@ -256,7 +257,7 @@ If the quality scores are too low on the ends of your reads, the data is less li
 Ideally, we want to keep the median quality score of the sequences equal to or above 30 or Q30. Meaning when we look at our last QIIME 2 Visualization, we will trim right before the first location in the sequence where the median is < 30. 
 
 
-To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command. Our input is 'trimmed-seq.qza' and we will have 3 outputs. After reviewing the interactive quality plots, the forward reads stay at or above Q30 until base number 231 so we will trim there. The reverse reads stay at or above Q30 until 185. 
+To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command. Our input is 'trimmed-seq.qza' and we will have 3 outputs. After reviewing the interactive quality plots, the forward reads are $\geq$ Q30 until base number 231 and the reverse reads are $\geq$ Q30 until 185, so we will trim at these locations.
 
 Note: You may now have to load in Qiime2/2023.2 using the ```module load``` command.
 
@@ -272,41 +273,37 @@ qiime dada2 denoise-paired \
 
 
 
-**What is a Quality Score?**
+#### **What is a Quality Score?**
 
 According to Illumina, a quality score represents the probability that the base "read" in the sequence is erroneous, i.e., not accurately representive of what the actual base of the biological sequence is.[<sup>Illumina</sup>](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.) The higher the quality score, the lower the probability of the base being an error. 
 
  <img width="471" alt="quality score illumina" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/3403e7c8-1582-4cd2-88fa-64ab06123954">
 
-**Image Source:** [https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.)
+Image Source:[Illumina](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.)
 
-Keeping median quality scores greater than or equal to 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
+Keeping median quality scores $\geq$ 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
 
-(ITS:
-8) explain EE
-9) explain p-trunc-q)
 
-## Step 8: Visualize the Denoising Stats
-A crucial step in this pipeline is visualizing the denoising stats.
+### Visualizing the Stats
+A crucial step in this pipeline is visualizing the denoising stats. We can achieve this by typing:
 
 ```
 qiime metadata tabulate \
 --m-input-file dada2-paired-end-stats.qza \
 --o-visualization dada2-paired-end-stats.qzv
 ```
-Learn more about the ```qiime metadata tabulate``` command [here](url).
 
-View the QZV stats file in QIIME 2 View, download the .tsv, and open it in Excel to calculate the recovery. 
+View the QZV stats file in QIIME 2 View download the .tsv, and open it in Excel to calculate the recovery. 
 Your .tsv file should look similar to this: 
 
 <img width="325" alt="denoise stats" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/eb09e44c-f702-41a5-88ca-d707652512b2">
 
-To calculate recovery, find the sum of each numerical column. Then determine the percentage of reads that made it through each stage by taking the sum of the individual columns C-F over the sum of the input column.  Ideally, you want at least a 70% recovery, or 70% of the reads are non-chimeric. 
+To calculate recovery, find the sum of the input, filtered, denoised, merged and non-chimeric columns. Then determine the percentage of reads that made it through each stage by taking the sum of the individual columns (e.g., filtered, denoised, merged or non-chimeric) over the sum of the input column. One can also average the percentage columns to get an estimate of the recovery for each stage (whichever method you prefer). Ideally, you want at least a 70% recovery, or 70% of the total input reads passed through the non-chimeric stage. 
 
 For further reference, view the [Denoise Stats Example](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Denoise%20Example%20Data.csv).
 
 If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as [maxEE](url) or [truncQ](url). 
-If not enough reads are passing the merging step, your reads may not be long enough to have a 20 base pair overlap. Consider analyzing single-end reads instead. If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads. 
+If not enough reads are passing the merging step, your reads may not be long enough to have a 12 base pair overlap. Consider analyzing single-end reads instead. If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads or that the truncation lengths are too long. 
 
 ## Step 9: Training the Classifier
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
