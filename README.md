@@ -321,7 +321,7 @@ Next, we want to download the 16S sequences and taxonomy using the following com
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-length.fna.qza
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
 ```
-
+We will be using the non-v4-16s arguement as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291).
 ```
 qiime greengenes2 non-v4-16s --i-table dada2-paired-end-table.qza --i-sequences dada2-paired-end-rep-seqs.qza --i-backbone 2022.10.backbone.full-length.fna.qza --p-threads 12 --o-mapped-table gg2-feature-table.biom.qza --o-representatives gg2-rep-tips.fna.qza
 ```
@@ -402,16 +402,6 @@ qiime taxa collapse --i-table dada2-paired-end-table6.qza --i-taxonomy taxonomy.
 ```
 
 
- 1) Download the Classifier from either green genes or silva 16s or Unite ITS
- 3) make characters uppercase to avoid downstream errors
- 4) 99 sequences .fasta to .qza
- 5) 99 taxonomy .txt to .qza
- 6) train classifier code
- 7) Learn the classifier (i believe 16s you trim to V4 region) but in ITS its best not to do trimming
- 8)create taxa feature table (ASV)
- 9) convert taxa table into .txt
- 10) open in excel
- 11) analysis
 
 
 
