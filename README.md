@@ -310,6 +310,30 @@ If a large percentage of reads do not make it past the non-chimeric reads, this 
 In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. [HOW TO DO SINGLE-END ANALYSIS**]
 
 ## Step 9: Training the Classifier
+Now we will download the Greengenes2 database. Green genes 2 is a relatively new bacterial database, but has been found to increase reproducibility between studies. [Greengenes2 unifies microbial data in a single reference tree](https://www.nature.com/articles/s41587-023-01845-1)
+First we must install the greengenes2 Qiime2 plugin.
+
+First , we will download greengenes 13_5 database using:
+
+``` wget https://gg-sg-web.s3-us-west-2.amazonaws.com/downloads/greengenes_database/gg_13_5/gg_13_5_otus.tar.gz```
+
+Then to untar the tar file we use:
+```tar -xf gg_13_5_otus.tar.gz```
+
+This has already been done for you within the /home/gomeza/shared/GitHub_Tutorial directory. The untared file is now the 'gg_13_5_otus' directory. 
+
+```qiime tools import --type 'FeatureData[Sequence]' --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/rep_set/99_otus.fasta --output-path ~/Gomez_Project_036/99_otus.qza```
+
+qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path ~/Gomez_Project_036/gg_13_5/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt --output-path ~/Gomez_Project_036/ref-taxonomy.qza
+
+qiime feature-classifier extract-reads --i-sequences ~/Gomez_Project_036/99_otus.qza --p-f-primer GTGYCAGCMGCCGCGGTAA --p-r-primer GGACTACNVGGGTWTCTAAT --o-reads ~/Gomez_Project_036/ref-seqs.qza
+
+qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ~/Gomez_Project_036/ref-seqs.qza --i-reference-taxonomy ~/Gomez_Project_036/ref-taxonomy.qza --o-classifier ~/Gomez_Project_036/classifier.qza
+
+qiime feature-classifier classify-sklearn --i-classifier ~/Gomez_Project_036/classifier.qza --i-reads ~/Gomez_Project_036/rep-seqs.qza --o-classification ~/Gomez_Project_036/taxonomy.qza
+
+
+
  1) Download the Classifier from either green genes or silva 16s or Unite ITS
  3) make characters uppercase to avoid downstream errors
  4) 99 sequences .fasta to .qza
