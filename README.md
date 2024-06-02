@@ -250,7 +250,7 @@ For more information on FastQC files, view the [FastQC Basics](url) file.
 ### Filtering and Denoising the Sequences
 If you are filtering ITS data, see [Filtering ITS](url) page.
 
-For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al. [(2022)](https://doi.org/10.1007/s00284-022-02956-9), the V4 region of 16S rRNA is approximately 250 base pairs in length. The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 12 base pairs. Therefore, you will want to set truncation lengths such that a 12 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
+For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al., the V4 region of 16S rRNA is approximately 250 base pairs in length.<sup>1</sup> The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 12 base pairs. Therefore, you will want to set truncation lengths such that a 12 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
 
 If the quality scores are too low on the ends of your reads, the data is less likely to be an accurate representation of what species are present in your sample. If your paired-end reads must be trimmed or truncated short due to low quality reads towards the ends of the sequences, it might be best to analyze the forwards sequences as single-end reads instead. The key here is to find the sweet spot where you keep as much data as you can, without sacrificing the quality of the data.
 
@@ -275,13 +275,11 @@ qiime dada2 denoise-paired \
 
 #### **What is a Quality Score?**
 
-According to Illumina, a quality score represents the probability that the base "read" in the sequence is erroneous, i.e., not accurately representive of what the actual base of the biological sequence is.[<sup>Illumina</sup>](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.) The higher the quality score, the lower the probability of the base being an error. 
-
  <img width="471" alt="quality score illumina" src="https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/assets/125623174/3403e7c8-1582-4cd2-88fa-64ab06123954">
 
-Image Source:[Illumina](https://www.illumina.com/content/dam/illumina-marketing/documents/products/technotes/technote_understanding_quality_scores.pdf#:~:text=A%20high%20quality%20score%20implies%20that%20a%20base,call%20in%201%2C000%20is%20predicted%20to%20be%20incorrect.)
+<sup>Image Source: Illumina</sup>
 
-Keeping median quality scores $\geq$ 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
+According to Illumina, a quality score represents the probability that the base "read" in the sequence is erroneous, i.e., not accurately representive of what the actual base of the biological sequence is.<sup>2</sup> The higher the quality score, the lower the probability of the base being an error. Keeping median quality scores $\geq$ 30 means that we are keeping the median at a 99.9% probabilty of it accurately representing the biological sequence. 
 
 
 ### Visualizing the Stats
@@ -311,7 +309,7 @@ In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each 
 
 ## Step 9: Training the Classifier
 ### Greengenes2
-Now we will download the Greengenes2 database. Greengenes 2 is a relatively new bacterial database, but has been found to increase reproducibility between studies. [Greengenes2 unifies microbial data in a single reference tree](https://www.nature.com/articles/s41587-023-01845-1)
+Now we will download the Greengenes2 database. Greengenes2 is a relatively new bacterial database, but has been found to increase reproducibility between studies.<sup>3</sup>
 First we must install the Greengenes2 Qiime2 plugin from our home direcotry (~). Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
 ```
 pip install q2-greengenes2
@@ -319,9 +317,10 @@ pip install q2-greengenes2
 Next, we want to download the 16S reference sequences and reference taxonomy using the following commands respectively:
 ```
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-length.fna.qza
+
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
 ```
-We will be using the ```non-v4-16s``` argument as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291). The ```non-v4-16s``` argument allows you to process paired end V4 data, which is what we have. This method uses closed-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be discarded. To perform closed-reference OTU picking we type:
+We will be using the ```non-v4-16s``` argument as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291).<sup>3</sup> The ```non-v4-16s``` argument allows you to process paired end V4 data, which is what we have. This method uses closed-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be discarded. To perform closed-reference OTU picking we type:
 ```
 qiime greengenes2 non-v4-16s --i-table dada2-paired-end-table.qza --i-sequences dada2-paired-end-rep-seqs.qza --i-backbone 2022.10.backbone.full-length.fna.qza --p-threads 12 --o-mapped-table gg2-feature-table.biom.qza --o-representatives gg2-rep-tips.fna.qza
 ```
@@ -359,5 +358,6 @@ This is your ASV Table. All we have to do is analyze and we're done!
 
 #### References
 
-
-
+1.   Katiraei, S. _et al._ Evaluation of Full-Length Versus V4-Region 16S rRNA Sequencing for Phylogenetic Analysis of Mouse Intestinal Microbiota After a Dietary Intervention. _Curr Microbiol_ **79**, 276 (2022).
+2.   Illumina. Understanding Illumina Quality Scores. (2014).
+3.   McDonald, D. _et al._ Greengenes2 unifies microbial data in a single reference tree. _Nat Biotechnol_ **42**, 715–718 (2024).
