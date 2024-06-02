@@ -311,28 +311,31 @@ In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each 
 
 ## Step 9: Training the Classifier
 ### Greengenes2
-Now we will download the Greengenes2 database. Green genes 2 is a relatively new bacterial database, but has been found to increase reproducibility between studies. [Greengenes2 unifies microbial data in a single reference tree](https://www.nature.com/articles/s41587-023-01845-1)
-First we must install the greengenes2 Qiime2 plugin. Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
+Now we will download the Greengenes2 database. Greengenes 2 is a relatively new bacterial database, but has been found to increase reproducibility between studies. [Greengenes2 unifies microbial data in a single reference tree](https://www.nature.com/articles/s41587-023-01845-1)
+First we must install the Greengenes2 Qiime2 plugin from our home direcotry (~). Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
 ```
 pip install q2-greengenes2
 ```
-Next, we want to download the 16S sequences and taxonomy using the following commands respectively:
+Next, we want to download the 16S reference sequences and reference taxonomy using the following commands respectively:
 ```
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-length.fna.qza
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
 ```
-We will be using the non-v4-16s arguement as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291).
+We will be using the ```non-v4-16s``` argument as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291). The ```non-v4-16s``` argument allows you to process paired end V4 data, which is what we have. This method uses closed-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be discarded. To perform closed-reference OTU picking we type:
 ```
 qiime greengenes2 non-v4-16s --i-table dada2-paired-end-table.qza --i-sequences dada2-paired-end-rep-seqs.qza --i-backbone 2022.10.backbone.full-length.fna.qza --p-threads 12 --o-mapped-table gg2-feature-table.biom.qza --o-representatives gg2-rep-tips.fna.qza
 ```
+Here, we input our table and our representative sequences from the ```qiime dada2 denoise-paired``` command. Our ```--i-backbone``` will be the 16s reference sequences downloaded previously.
+The outputs will be a clustered table 'gg2-feature-table.biom.qza' and representative backbone tips 'gg2-rep-tips.fna.qza'. Next we use the clustered table 'gg2-feature-table.biom.qza' and the reference taxonomy downloaded as inputs into the ```taxonomy-from-table``` command. 
 ```
 qiime greengenes2 taxonomy-from-table --i-reference-taxonomy 2022.10.taxonomy.asv.nwk.qza --i-table gg2-feature-table.biom.qza --o-classification gg2.taxonomy.qza
 ```
-
+This will create a file assigning taxonomy to the ASV clusters in the clustered table. To add the taxonomy to the clustered table we input our clustered table 'gg2-feature-table.biom.qza' and our assigned taxonomy 'gg2.taxonomy.qza' into the ```qiime taxa collapse``` command:
 ```
 qiime taxa collapse --i-table gg2-feature-table.biom.qza --i-taxonomy gg2.taxonomy.qza --p-level 7 --o-collapsed-table collapsed_table.qza
 ```
-Then we want to unpack the contents of the file 'collapsed_table.qza':
+This will give us our ASV Table! Now we just have to adjust the format a bit.
+First, we want to unpack the contents of the file 'collapsed_table.qza':
 ```
 unzip collapsed_table.qza
 ```
@@ -340,9 +343,9 @@ This should create a directory of the unzipped contents from the 'collapsed_tabl
 ```
 mv [insert long random name directory here] collapsed_table
 ```
-When putting the long directory name in the command above, do not place brackets around it.
+When putting the long directory name in the command above, do not place brackets around it. This will rename your directory to 'collapsed_table'.
 
-Navigate to the 'collapsed_table' directory and then the 'data' direcotry within. You will see a 'feature-table.biom' file. We need to convert this file to a tsv format so that it is readable by programs like Excell. This can be achieved by typing:
+Navigate to the 'collapsed_table' directory and then the 'data' directory within. You will see a 'feature-table.biom' file. We need to convert this file to  tsv format so that it is readable by programs like Excell. This can be achieved by typing:
 
 ```
 biom convert -i feature-table.biom -o feature_table.txt --to-tsv
@@ -359,7 +362,7 @@ This is your ASV Table. All we have to do is analyze and we're done!
 
 ### Greengenes
 First , we will download greengenes 13_5 database using:
-
+open reference otu picking
 ``` 
 wget https://gg-sg-web.s3-us-west-2.amazonaws.com/downloads/greengenes_database/gg_13_5/gg_13_5_otus.tar.gz
 ```
