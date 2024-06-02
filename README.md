@@ -357,54 +357,7 @@ Now the output file 'feature_table.txt' is ready to be moved to your local compu
 This is your ASV Table. All we have to do is analyze and we're done!
 
 
-
-
-
-### Greengenes
-First , we will download greengenes 13_5 database using:
-open reference otu picking
-``` 
-wget https://gg-sg-web.s3-us-west-2.amazonaws.com/downloads/greengenes_database/gg_13_5/gg_13_5_otus.tar.gz
-```
-
-Then to untar the tar file we use:
-```
-tar -xf gg_13_5_otus.tar.gz
-```
-
-This has already been done for you within the /home/gomeza/shared/GitHub_Tutorial directory. The untared file is now the 'gg_13_5_otus' directory. 
-
-```
-qiime tools import --type 'FeatureData[Sequence]' --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/rep_set/99_otus.fasta --output-path ~/16s_Tutorial_Analysis/99_otus.qza
-```
-
-```
-qiime tools import --type 'FeatureData[Taxonomy]' --input-format HeaderlessTSVTaxonomyFormat --input-path ~/../shared/GitHub_Tutorial/gg_13_5_otus/taxonomy/99_otu_taxonomy.txt --output-path ~/16s_Tutorial_Analysis/ref-taxonomy.qza
-```
-
-To target the V4 regions while training the classifier we type:
-
-```
-qiime feature-classifier extract-reads --i-sequences 99_otus.qza --p-f-primer GTGYCAGCMGCCGCGGTAA --p-r-primer GGACTACNVGGGTWTCTAAT --o-reads ref-seqs.qza
-```
-*Note: this step will take a while so write a shell script with your text editor Atom and schedule the job with [Slurm](https://msi.umn.edu/our-resources/knowledge-base/slurm-job-submission-and-scheduling) on MSI. Then transfer the shell script file with filezilla as before. If using a Windows computer you must convert the files format to be compatible with Linux. Run the command: ```dos2unix [insert file here]``` on the shell script file. Then run ```sbatch [insert file here]``` to queue the job. 
-
-------------------add shell script used to speed up job here---------------------
-
-This step may also take some time
-```
-qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ref-seqs.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier.qza
-```
-------------------add shell script used ---------------------
-```
-qiime feature-classifier classify-sklearn --i-classifier classifier.qza --i-reads dada2-paired-end-rep-seqs6.qza --p-n-jobs 12  --o-classification taxonomy.qza
-```
-
-```
-qiime taxa collapse --i-table dada2-paired-end-table6.qza --i-taxonomy taxonomy.qza --p-level 7 --o-collapsed-table collapsed_tablegg1.qza
-```
-
-
+#### References
 
 
 
