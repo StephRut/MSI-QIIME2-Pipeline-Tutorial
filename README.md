@@ -218,7 +218,7 @@ Generally, the quality score of a base will decrease as the base position increa
 FOR MSI USERS: Within the directory that you found your raw Fastq files in, follow the filepath ```analysis/illumina-basicQC```. Look over the file 'report.html'. This will take you to an Illumina BasicQC report. You should also view a few of the FastQC reports generated, which can be found by following ```analysis/illumina-basicQC/fastqc``` again, starting from the directory containing your raw Fastqc files.
 
 
-## Step 7: Filter, Denoise and Visualize the Sequences
+## Step 7: Filter, Denoise, and Visualize the Sequences
 ### Filtering and Denoising the Sequences
 
 For 16S rRNA data, especially paired-end reads, it is important to know the length of the sequences you are targeting. According to Katiraei et al., the V4 region of 16S rRNA is approximately 250 base pairs in length.<sup>1</sup> The ```qiime dada2 denoise-paired``` command used to truncate and merge the forward and reverse reads requires an overlap of at least 12 base pairs. Therefore, you will want to set truncation lengths such that a 12 base pair overlap is likely to occur. In other words, don't truncate too short if you want to merge the paired-end reads!
@@ -278,7 +278,7 @@ If a large percentage of reads do not make it past the non-chimeric reads, this 
 
 In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. [HOW TO DO SINGLE-END ANALYSIS**]
 
-## Step 8: Training the Classifier
+## Step 8: Add Taxonomy and Analyze
 ### Greengenes2
 Now we will download the Greengenes2 database. Greengenes2 is a relatively new bacterial database, but has been found to increase reproducibility between studies.<sup>3</sup>
 First we must install the Greengenes2 Qiime2 plugin from our home direcotry **'~'**. Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
@@ -340,6 +340,12 @@ Now the output file **'feature_table.txt'** is ready to be moved to your local c
 
 This is your ASV Table! 
 
+### Analysis with Excel
+
+First, we will create a new sheet in Excel and name it 'Analysis'. From the ASV table, copy the sample-ids (316D14,316D21,...) in row 2 and transpose it (a type of paste) in the first column of the 'Analysis' sheet. 
+Let's start by summing up the number of reads per sample. Then we will sum up the number of reads per sample by adding up the numerical values for each column with a sample ID. After summing up column B (316D14), drag the function over to column M. Copy these sums and paste them as values below. Copy these values and transpose them into the 2nd column of the 'Analysis' sheet. Adding the numerical values of column 2 together will give you your final recovery of about 152000. Looking back at the dada2_paired_end_stats, the number of initial sequences before any filtering was 258000. Thus, our final recovery is ~ 58.9%. 
+
+BUT WAIT! Didn't I say earlier that we had a recovery of ~66.7%? Yes, yes I did. The discrepancy between these two percentages is a consequence of closed-reference OTU picking. Sequences in our dataset that did not match up with sequences in the reference dataset are dropped, which is about 8% of our total sequences. A final recovery of 58.9% is quite low, so I would highly recommend going back and using single-end data instead.
 
 #### References
 
