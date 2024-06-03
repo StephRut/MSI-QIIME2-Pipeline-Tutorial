@@ -164,6 +164,7 @@ Verify that the protocol is SFTP, the host is mesabi.msi.umn.edu, the port is 22
 Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'** directory.
 
 ## Step 5: Trim Primers and Visualize Sequences
+⚠️ _NOTE: Some of the following commands may require using Slurm job scripts like [this](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Batch%20Script.md)._
 
 Load QIIME2 in the directory you are working in.
 ```shell
@@ -292,6 +293,7 @@ wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-len
 ```
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
 ```
+⚠️ _NOTE: All of the following qiime commands were ran using a slurm job script._
 We will be using the ```non-v4-16s``` argument as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291).<sup>3</sup> The ```non-v4-16s``` argument allows you to process paired end V4 data, which is what we have. This method uses closed-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be discarded. To perform closed-reference OTU picking we type:
 ```
 qiime greengenes2 non-v4-16s \
@@ -302,6 +304,7 @@ qiime greengenes2 non-v4-16s \
 --o-mapped-table gg2-feature-table.biom.qza \
 --o-representatives gg2-rep-tips.fna.qza
 ```
+Slurm script used for the above command.
 Here, we input our table and our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-backbone``` will be the 16s reference sequences downloaded previously.
 The outputs will be a clustered table **'gg2-feature-table.biom.qza'** and representative backbone tips **'gg2-rep-tips.fna.qza'**. Next we use the clustered table **'gg2-feature-table.biom.qza'** and the reference taxonomy downloaded as inputs into the ```taxonomy-from-table``` command. 
 ```
