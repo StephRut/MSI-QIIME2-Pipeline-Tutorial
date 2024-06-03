@@ -152,7 +152,7 @@ How your Manifest file in Excel should look:
 
 Before uploading your final Manifest file to QIIME2, ensure that your file looks like [this](https://github.com/StephRut/MSI_QIIME2_Pipeline_Tutorial/blob/main/Manifest_Example2), with no extra spaces or blanks between columns. Extra blanks/spaces will lead to downstream errors. 
 
-❕ _HINT: Make sure to check that the cells in Excel are populating correctly to avoid errors later on._
+⚠️ _NOTE: Make sure to check that the cells in Excel are populating correctly to avoid errors later on._
 
 ## Step 4: Import Manifest
 Open up Filezilla (or other file sharing software) and connect to the remote server. To do this, click 'file' in the upper lefthand corner of the screen, and 'site manager' in the pull down list. Your screen should look like this:
@@ -294,6 +294,7 @@ wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-len
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
 ```
 ⚠️ _NOTE: All of the following qiime commands were ran using a slurm job script._
+
 We will be using the ```non-v4-16s``` argument as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291).<sup>3</sup> The ```non-v4-16s``` argument allows you to process paired end V4 data, which is what we have. This method uses closed-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be discarded. To perform closed-reference OTU picking we type:
 ```
 qiime greengenes2 non-v4-16s \
@@ -304,16 +305,20 @@ qiime greengenes2 non-v4-16s \
 --o-mapped-table gg2-feature-table.biom.qza \
 --o-representatives gg2-rep-tips.fna.qza
 ```
-Slurm script used for the above command.
-Here, we input our table and our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-backbone``` will be the 16s reference sequences downloaded previously.
-The outputs will be a clustered table **'gg2-feature-table.biom.qza'** and representative backbone tips **'gg2-rep-tips.fna.qza'**. Next we use the clustered table **'gg2-feature-table.biom.qza'** and the reference taxonomy downloaded as inputs into the ```taxonomy-from-table``` command. 
+[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/edit/main/Qiime-Slurm-Script.md) used for the above command.
+Here, we input our table and our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-backbone``` will be the 16s reference sequences downloaded.
+The outputs will be a clustered table **'gg2-feature-table.biom.qza'** and representative backbone tips **'gg2-rep-tips.fna.qza'**.
+
+Next we use the clustered table **'gg2-feature-table.biom.qza'** and the reference taxonomy downloaded as inputs into the ```taxonomy-from-table``` command. 
 ```
 qiime greengenes2 taxonomy-from-table \
 --i-reference-taxonomy 2022.10.taxonomy.asv.nwk.qza \
 --i-table gg2-feature-table.biom.qza \
 --o-classification gg2.taxonomy.qza
 ```
-This will create a file assigning taxonomy to the ASV clusters in the clustered table. To add the taxonomy to the clustered table we input our clustered table **'gg2-feature-table.biom.qza'** and our assigned taxonomy **'gg2.taxonomy.qza'** into the ```qiime taxa collapse``` command:
+This will create a file assigning taxonomy to the ASV clusters in the clustered table. 
+
+To add the taxonomy to the clustered table we input our clustered table **'gg2-feature-table.biom.qza'** and our assigned taxonomy **'gg2.taxonomy.qza'** into the ```qiime taxa collapse``` command:
 ```
 qiime taxa collapse \
 --i-table gg2-feature-table.biom.qza \
