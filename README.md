@@ -273,11 +273,13 @@ Your .tsv file should look similar to this:
 
 
 
-If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as [maxEE](url) or [truncQ](url). 
+If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as maxEE or truncQ. 
 If not enough reads are passing the merging step, your reads may not be long enough to have a 12 base pair overlap. Consider analyzing single-end reads instead. 
 If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads or that the truncation lengths are too long. 
 
-In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. [HOW TO DO SINGLE-END ANALYSIS](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md)
+In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. 
+
+[HOW TO DO SINGLE-END ANALYSIS](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md)
 
 ## Step 8: Add Taxonomy and Analyze
 ### Greengenes2
@@ -305,7 +307,8 @@ qiime greengenes2 non-v4-16s \
 --o-mapped-table gg2-feature-table.biom.qza \
 --o-representatives gg2-rep-tips.fna.qza
 ```
-[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/edit/main/Qiime-Slurm-Script.md) used for the above command.
+<sup> **[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/edit/main/Qiime-Slurm-Script.md)** used for the above command.</sup>
+
 Here, we input our table and our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-backbone``` will be the 16s reference sequences downloaded.
 The outputs will be a clustered table **'gg2-feature-table.biom.qza'** and representative backbone tips **'gg2-rep-tips.fna.qza'**.
 
@@ -353,7 +356,7 @@ This is your ASV Table!
 First, we will create a new sheet in Excel and name it 'Analysis'. From the ASV table, copy the sample-ids (316D14,316D21,...) in row 2 and transpose it (a type of paste) in the first column of the 'Analysis' sheet. 
 Let's start by summing up the number of reads per sample. Then we will sum up the number of reads per sample by adding up the numerical values for each column with a sample ID. After summing up column B (316D14), drag the function over to column M. Copy these sums and paste them as values below. Copy these values and transpose them into the 2nd column of the 'Analysis' sheet. Adding the numerical values of column 2 together will give you your final recovery of about 152000. Looking back at the dada2_paired_end_stats, the number of initial sequences before any filtering was 258000. Thus, our final recovery is ~ 58.9%. 
 
-BUT WAIT! Didn't I say earlier that we had a recovery of ~66.7%? Yes, yes I did. The discrepancy between these two percentages is a consequence of closed-reference OTU picking. Sequences in our dataset that did not match up with sequences in the reference dataset are dropped, which is about 8% of our total sequences. A final recovery of 58.9% is quite low, so I would highly recommend going back and using single-end data instead.
+BUT WAIT! Didn't I say earlier that we had a recovery of ~66.7%? Yes, yes I did. The discrepancy between these two percentages is a consequence of closed-reference OTU picking. Sequences in our dataset that did not match up with sequences in the reference dataset are dropped, which is about 8% of our total sequences. A final recovery of 58.9% is quite low, so I would highly recommend going back and using [single-end data](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md) instead.
 
 #### References
 
