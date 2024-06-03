@@ -278,7 +278,7 @@ If a large percentage of reads do not make it past the non-chimeric reads, this 
 
 In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. [HOW TO DO SINGLE-END ANALYSIS**]
 
-## Step 9: Training the Classifier
+## Step 8: Training the Classifier
 ### Greengenes2
 Now we will download the Greengenes2 database. Greengenes2 is a relatively new bacterial database, but has been found to increase reproducibility between studies.<sup>3</sup>
 First we must install the Greengenes2 Qiime2 plugin from our home direcotry **'~'**. Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
