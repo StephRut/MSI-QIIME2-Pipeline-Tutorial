@@ -342,9 +342,9 @@ This is your ASV Table!
 ### Analysis with Excel
 
 First, we will create a new sheet in Excel and name it 'Analysis'. From the ASV table, copy the sample-ids (316D14,316D21,...) in row 2 and transpose it (a type of paste) in the first column of the 'Analysis' sheet. 
-Let's start by summing up the number of reads per sample. Then we will sum up the number of reads per sample by adding up the numerical values for each column with a sample ID. After summing up column B (316D14), drag the function over to column M. Copy these sums and paste them as values below. Copy these values and transpose them into the 2nd column of the 'Analysis' sheet. Adding the numerical values of column 2 together will give you your final recovery of about 152000. Looking back at the dada2_paired_end_stats, the number of initial sequences before any filtering was 258000. Thus, our final recovery is ~ 58.9%. 
+Let's start by summing up the number of reads per sample. Then we will sum up the number of reads per sample by adding up the numerical values for each column with a sample ID. After summing up column B (316D14), drag the function over to column M. Copy these sums and paste them as values below. Copy these values and transpose them into the 2nd column of the 'Analysis' sheet. Adding the numerical values of column 2 together will give you your final recovery of about 172000. Looking back at the dada2_paired_end_stats, the number of initial sequences before any filtering was 258000. Thus, our final recovery is ~ 66.7%. 
 
-BUT WAIT! Didn't I say earlier that we had a recovery of ~66.7%? Yes, yes I did. The discrepancy between these two percentages is a consequence of closed-reference OTU picking. Sequences in our dataset that did not match up with sequences in the reference dataset are dropped, which is about 8% of our total sequences. A final recovery of 58.9% is quite low, so I would highly recommend going back and using [single-end data](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md) instead.
+A final recovery of 66.7% is okay, but I would highly recommend going back and using [single-end data](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md) to increase your recovery depth.
 
 #### References
 
