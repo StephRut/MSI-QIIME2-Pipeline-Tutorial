@@ -288,48 +288,36 @@ First we must install the Greengenes2 Qiime2 plugin from our home direcotry **'~
 ```
 pip install q2-greengenes2
 ```
-Next, we want to download the 16S reference sequences and reference taxonomy using the following commands respectively in our **'16s_Tutorial_Analysis'** directory:
+Next, we want to download the pre-trained classifier for the 16S v4 region using the following command in our **'16s_Tutorial_Analysis'** directory:
 ```
-wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.full-length.fna.qza
+wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.v4.nb.qza
 ```
-```
-wget http://ftp.microbio.me/greengenes_release/current/2022.10.taxonomy.asv.nwk.qza
-```
+
 ⚠️ _NOTE: All of the following qiime commands were ran using a slurm job script._
 
-We will be using the ```non-v4-16s``` argument as per Daniel McDonald's [instructions](https://forum.qiime2.org/t/introducing-greengenes2-2022-10/25291).<sup>3</sup> The ```non-v4-16s``` argument allows you to process paired end V4 data, which is what we have. This method uses closed-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be discarded. To perform closed-reference OTU picking we type:
+The commands in Greengenes2 uses closed-reference OTU-picking, but we want to use open-reference, therefore we will be using the ```qiime feature-classifier classify-sklearn```.
+This method uses open-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be retained and clustered against themselves. To perform closed-reference OTU picking we type:
 ```
-qiime greengenes2 non-v4-16s \
---i-table dada2-paired-end-table.qza \
---i-sequences dada2-paired-end-rep-seqs.qza \
---i-backbone 2022.10.backbone.full-length.fna.qza \
---p-threads 12 \
---o-mapped-table gg2-feature-table.biom.qza \
---o-representatives gg2-rep-tips.fna.qza
+qiime feature-classifier classify-sklearn \
+--i-classifier 2022.10.backbone.v4.nb.qza \
+--i-reads dada2-paired-end-rep-seqs.qza \
+--p-n-jobs 12  \
+--o-classification taxonomy.qza
 ```
 <sup> **[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/edit/main/Qiime-Slurm-Script.md)** used for the above command.</sup>
 
-Here, we input our table and our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-backbone``` will be the 16s reference sequences downloaded.
-The outputs will be a clustered table **'gg2-feature-table.biom.qza'** and representative backbone tips **'gg2-rep-tips.fna.qza'**.
+Here, we input our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-classifier``` will be the pre-trained classifier downloaded.
+The outputs will be taxonomy **'taxonomy.qza'** associated with our representative sequences.
 
-Next we use the clustered table **'gg2-feature-table.biom.qza'** and the reference taxonomy downloaded as inputs into the ```taxonomy-from-table``` command. 
-```
-qiime greengenes2 taxonomy-from-table \
---i-reference-taxonomy 2022.10.taxonomy.asv.nwk.qza \
---i-table gg2-feature-table.biom.qza \
---o-classification gg2.taxonomy.qza
-```
-This will create a file assigning taxonomy to the ASV clusters in the clustered table. 
-
-To add the taxonomy to the clustered table we input our clustered table **'gg2-feature-table.biom.qza'** and our assigned taxonomy **'gg2.taxonomy.qza'** into the ```qiime taxa collapse``` command:
+Next we use the table from the ```qiime dada2 denoise-paired``` command and the **'taxonomy.qza'** as inputs into the ```qiime taxa collapse``` command to associated the taxonomy with our table. 
 ```
 qiime taxa collapse \
---i-table gg2-feature-table.biom.qza \
---i-taxonomy gg2.taxonomy.qza \
+--i-table dada2-paired-end-table2.qza \
+--i-taxonomy taxonomy2.qza \
 --p-level 7 \
 --o-collapsed-table collapsed_table.qza
 ```
-This will give us our ASV Table! Now we just have to adjust the format a bit.
+This will give us our ASV table! Now we just have to adjust the format a bit.
 First, we want to unpack the contents of the file **'collapsed_table.qza'**:
 ```
 unzip collapsed_table.qza
