@@ -301,7 +301,7 @@ This method uses open-reference OTU picking where the sequences will be compared
 qiime feature-classifier classify-sklearn \
 --i-classifier 2022.10.backbone.v4.nb.qza \
 --i-reads dada2-paired-end-rep-seqs.qza \
---p-n-jobs 12  \
+--p-n-jobs 20  \
 --o-classification taxonomy.qza
 ```
 <sup> **[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/edit/main/Qiime-Slurm-Script.md)** used for the above command.</sup>
@@ -312,8 +312,8 @@ The outputs will be taxonomy **'taxonomy.qza'** associated with our representati
 Next we use the table from the ```qiime dada2 denoise-paired``` command and the **'taxonomy.qza'** as inputs into the ```qiime taxa collapse``` command to associated the taxonomy with our table. 
 ```
 qiime taxa collapse \
---i-table dada2-paired-end-table2.qza \
---i-taxonomy taxonomy2.qza \
+--i-table dada2-paired-end-table.qza \
+--i-taxonomy taxonomy.qza \
 --p-level 7 \
 --o-collapsed-table collapsed_table.qza
 ```
