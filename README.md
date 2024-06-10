@@ -1,5 +1,5 @@
 # MSI QIIME2 Pipeline Tutorial
-This tutorial will be based on QIIME2 Version [2018.11](https://docs.qiime2.org/2018.11/index.html) and [2023.2](https://docs.qiime2.org/2023.2/index.html). Commands and formats of files may change depending on the version of QIIME2 you are using. 
+This tutorial will be based on QIIME2 Version [2023.2](https://docs.qiime2.org/2023.2/index.html). Commands and formats of files may change depending on the version of QIIME2 you are using. 
 
 ## Step 1: Getting Started
  ### Software Requirements 
@@ -29,7 +29,7 @@ If you are working remotely, i.e, not connected to the eduroam WiFi on campus, y
 Open up your Cisco AnyConnect application and connect to the U of M Full-Tunnel VPN. Once connected, navigate to your terminal application type:
 
 ```
-ssh x500@mesabi.msi.umn.edu
+ssh x500@agate.msi.umn.edu
 ```
 
 Don't forget to press enter!
@@ -41,11 +41,6 @@ _See the MSI [Connecting to HPC](https://www.msi.umn.edu/content/connecting-hpc-
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/succesful_connection.jpg" width=800 height=300>
 
-⚠️ _NOTE: With Mesabi shutting down, we soon have to use the command:_
-```
-ssh x500@agate.msi.umn.ed
-```
-everything should run the same
 
 ### Finding the Sequencing Data
 
@@ -167,8 +162,8 @@ Ensure that your Manifest file has been transfered to MSI by performing and ```l
 ⚠️ _NOTE: Some of the following commands may require using Slurm job scripts like [this](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Batch%20Script.md)._
 
 Load QIIME2 in the directory you are working in.
-```shell
-module load qiime2/2018.11
+```
+module load qiime2/2023.2
 ```
 
 Next, within the **'16s_Tutorial_Analysis'** directory, convert your Manifest file into QZA (QIIME 2 Artifact) format. The input file **' Manifest.csv'** is the manifest file that we just moved into MSI and the output **'demux.qza'** will be a file  of demultiplexed sequences. 
@@ -231,7 +226,6 @@ Ideally, we want to keep the median quality score of the sequences equal to or a
 
 To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command. Our input is **'trimmed-seq.qza'** and we will have 3 outputs. After reviewing the interactive quality plots, the forward reads are $\geq$ Q30 until base number 231 and the reverse reads are $\geq$ Q30 until 185, so we will trim at these locations.
 
-Note: You may now have to load in Qiime2/2023.2 using the ```module load``` command.
 
 ```
 qiime dada2 denoise-paired \
@@ -242,7 +236,6 @@ qiime dada2 denoise-paired \
 --o-table dada2-paired-end-table.qza \
 --o-denoising-stats dada2-paired-end-stats.qza
 ```
-
 
 
 #### **What is a Quality Score?**
