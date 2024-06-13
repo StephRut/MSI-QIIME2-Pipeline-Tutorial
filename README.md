@@ -304,7 +304,7 @@ qiime feature-classifier classify-sklearn \
 --p-n-jobs 20  \
 --o-classification taxonomy.qza
 ```
-<sup> **[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/edit/main/Qiime-Slurm-Script.md)** used for the above command.</sup>
+<sup> **[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Qiime-Slurm-Script.md)** used for the above command.</sup>
 
 Here, we input our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-classifier``` will be the pre-trained classifier downloaded.
 The outputs will be taxonomy **'taxonomy.qza'** associated with our representative sequences.
