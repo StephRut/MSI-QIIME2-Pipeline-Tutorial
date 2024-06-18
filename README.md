@@ -167,7 +167,6 @@ Verify that the protocol is SFTP, the host is agate.msi.umn.edu, the port is 22,
 Ensure that your Manifest file has been transfered to MSI by performing and ```ls``` command on the **'16s_Tutorial_Analysis'** directory.
 
 ## Step 5: Trim Primers and Visualize Sequences
-⚠️ _NOTE: Some of the following commands may require using Slurm job scripts like [this](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Batch%20Script.md)._
 
 Load QIIME2 into the directory you are working in.
 ```
@@ -260,9 +259,10 @@ We will take the output file **'trimmed-seq.qzv'** and transfer it over to our l
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/Trimmed%20Seq%20Vis.png">
 
-These graphs are actually box and whisker plots. You can zoom in on the plots by clicking and dragging a rectangle over the area you want to see closer. 
+These graphs are actually box and whisker plots. You can zoom in on the plots by clicking and dragging a rectangle over the area you want to see closer. Below is a zoomed in version of the box and whisker plot.
 
-<img src="https://github.com/StephRut/Images-for-Github/blob/main/box%20and%20whisker.png" width=500 height=300>
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/box%20and%20whisker.png" width=500 height=300> 
+
 
 The data was trimmed to 301 nucleotides when we received it. Therefore, if the primers were trimmed, the lenghts of the sequences should be ~ 280 nucleotides long. Verify this by checking the sequence length summary at the bottom of the interactive quality plot page.
 
