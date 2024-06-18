@@ -174,18 +174,70 @@ Load QIIME2 into the directory you are working in.
 module load qiime2/2023.2
 ```
 
-Next, within the **'16s_Tutorial_Analysis'** directory, convert your Manifest file into QZA (QIIME 2 Artifact) format. The input file **'Manifest.csv'** is the manifest file that we just moved into MSI and the output **'demux.qza'** will be a file of demultiplexed sequences. 
+Several steps within this pipeline may take hours to run. Unfortunatly, you can only run commands from the command line interactively (everything you've done up until this point) if they take less than 15 minutes. If the command takes over 15 minutes, it will fail partway through. We can both get around this 15 minute wall-time and decrease the amount of time it takes to run a job by using slurm scripts!
+
+### Slurm Job Scripts
+Submitting a Slurm job script to the slurm scheduler allows you to run commands in the background instead of running them interactively. These scripts are shell scripts and can be made using a text editor app like Atom. You can also use vim if you are familiar with it. 
+
+#### Writting the Script
+Let's create a shell script for the next command in the pipeline. Within the **'16s_Tutorial_Analysis'** directory, convert your Manifest file into QZA (QIIME 2 Artifact) format. The input file **'Manifest.csv'** is the manifest file that we just moved into MSI and the output **'demux.qza'** will be a file of demultiplexed sequences. 
+
 ```
-qiime tools import \
---type SampleData[PairedEndSequencesWithQuality] \
---input-path Manifest.csv \
---output-path demux.qza \
---input-format PairedEndFastqManifestPhred33
+#!/bin/bash -l
+#SBATCH --time=1:00:00
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=30g
+#SBATCH --tmp=30g
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=rutsc011@umn.edu
+cd ~/16s_Tutorial_Analysis
+module load qiime2/2023.2
+qiime tools import --type SampleData[PairedEndSequencesWithQuality] --input-path Manifest.csv --output-path demux.qza --input-format PairedEndFastqManifestPhred33
 ```
 
-Now we want to trim the PCR Primers. For 16S rRNA data, the process of trimming primmers is fairly straight forward. The forward and reverse primers are the sequences that were specified for the PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: _GTGYCAGCMGCCGCGGTAA_ and reverse primer: _GGACTACNVGGGTWTCTAAT_
+The first line is needed for every shell script you create. It specifies which shell you will run the script on, we will always use bash.
 
-Using the output file **'demux.qza'** from the previous command as our input, we can trim the primers. The parameter ```--p-front-f``` specifies the forward primer (primer used on forward reads) and ```--p-front-r``` specifies the reverse primer (primer used on reverse reads). Any primers can be used in the space following these parameters.
+The following #SBATCH lines are for requesting resources and are known as sbatch commands. The #SBATCH --time command reqeusts the amount of time you need for your job to run (here it requests 1 hour). You can always add/subtract time from this parameter depending on how long you expect a job to run for. 
+
+The #SBATCH --ntasks command requests 1 processor core. Generally, all commands within this pipeline will only use 1 processor core, therefore this line does not need to be changed between jobs.
+
+The #SBATCH --cpus-per-task command requests 8 CPUs to be used for job threading, i.e., 8 CPU's instead of 1 CPU will be used to run the command. This should decrease the total amount of time it takes for a command to run. You can add/subtract then number of CPUs request for each job. 
+
+The #SBATCH --mem command requests 30 gigabytes(gb) of memory, and the #SBATCH --tmp command requests 30 gb of temporary space. You can again add/subtract gigabytes depending on how many CPUs you request. 
+
+The #SBATCH --mail-type command will allow you to receive an email when the job begins, completes and/or fails. 
+
+The #SBATCH --mail-user command specifies to whom these emails are sent. The cd line indicates from which directory you want to run the command. You will also need to load the proper module (qiime2/2023.2) for the command before listing the command.
+
+The last line in the script is the command you want to run: ```qiime tools import```. Save the file to your local computer as **'manifest.sh'**
+
+
+#### Submitting the Script
+
+To submit the script, first transfer **'manifest.sh'** from your local computer to MSI using Filezilla. 
+
+**Windows Users Only:**
+```
+dos2unix manifest.sh
+```
+
+Then, submit the job to the Slurm Scheduler using:
+```
+sbatch manifest.sh
+```
+To check on the status of your job, you can use:
+
+```
+squeue -u x500
+```
+
+More information for the MSI Slurm Scheduler can be found [here](https://msi.umn.edu/our-resources/knowledge-base/slurm-job-submission-and-scheduling). The partitions you can run the jobs on can be found [here](https://msi.umn.edu/our-resources/slurm-scheduler/slurm-partitions).
+
+### Trimming the Primers
+Now we want to trim the PCR primers. For 16S rRNA data, the process of trimming primmers is fairly straight forward. The forward and reverse primers are the sequences that were specified for the PCR. Oftentimes, the V4 region of 16S rRNA is used, which can be isolated using the 515F - 806R primer pair with forward primer: _GTGYCAGCMGCCGCGGTAA_ and reverse primer: _GGACTACNVGGGTWTCTAAT_
+
+Using the output file **'demux.qza'** from the previous Slurm job as our input, we can trim the primers. The parameter ```--p-front-f``` specifies the forward primer (primer used on forward reads) and ```--p-front-r``` specifies the reverse primer (primer used on reverse reads). Any primers can be used in the space following these parameters.
 
 To trim these primers we type:
 ```
@@ -195,7 +247,9 @@ qiime cutadapt trim-paired \
 --p-front-r GGACTACNVGGGTWTCTAAT \
 --o-trimmed-sequences trimmed-seqs.qza 
 ```
-The output file will be **'trimmed-seqs.qza'**, which will contain the primer-less version of your sequences. Next, create a visualization summary of your trimmed sequences. Again, taking the output file from our previous command, we type:
+The output file will be **'trimmed-seqs.qza'**, which will contain the primer-less version of your sequences. 
+### Visualizing the Trimmed Sequences
+Next, create a visualization summary of your trimmed sequences. Again, taking the output file from our previous command, we type:
 
 ```
 qiime demux summarize \
@@ -206,8 +260,11 @@ We will take the output file **'trimmed-seq.qzv'** and transfer it over to our l
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/Trimmed%20Seq%20Vis.png">
 
-You can zoom in on the plots by clicking and dragging a rectangle over the area you want to see closer. ***add image here*** Try to get familiar with the interactive quality plots in this visualization.
-Our data was trimmed to 301 nucleotides when we received it. Therefore, if the primers were trimmed, the lenghts of the sequences should be ~ 280 nucleotides long. Verify this by checking the sequence length summary at the bottom of the interactive quality plot page.
+These graphs are actually box and whisker plots. You can zoom in on the plots by clicking and dragging a rectangle over the area you want to see closer. 
+
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/box%20and%20whisker.png" width=500 height=300>
+
+The data was trimmed to 301 nucleotides when we received it. Therefore, if the primers were trimmed, the lenghts of the sequences should be ~ 280 nucleotides long. Verify this by checking the sequence length summary at the bottom of the interactive quality plot page.
 
 For 16S rRNA data, the quality of your reads will determine the lengths where you should trim (removing bases from the start) and truncate (removing bases from the end) the sequences. For ITS data, it is generally recommended to filter your data using different metrics, see Filtering step.
 
@@ -230,8 +287,12 @@ If the quality scores are too low on the beginning or end of your reads, the dat
 
 Ideally, we want to keep the median quality score of the sequences equal to or above 30 or Q30. Meaning when we look at our last QIIME 2 Visualization, we will trim right before the first location in the sequence where the median is < 30. 
 
+After reviewing the interactive quality plots, the forward reads are $\geq$ Q30 until base number 231 and the reverse reads are $\geq$ Q30 until 185, so we will truncate at these locations.
 
-To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command. Our input is **'trimmed-seq.qza'** and we will have 3 outputs. After reviewing the interactive quality plots, the forward reads are $\geq$ Q30 until base number 231 and the reverse reads are $\geq$ Q30 until 185, so we will trim at these locations.
+<img src="https://github.com/StephRut/Images-for-Github/blob/main/vismarked.png">
+
+
+To truncate and merge the paired-end reads, use the ```qiime dada2 denoise-paired``` command. Our input is **'trimmed-seq.qza'** and we will have 3 outputs. 
 
 
 ```
@@ -263,40 +324,40 @@ qiime metadata tabulate \
 --o-visualization dada2-paired-end-stats.qzv
 ```
 
-To view the QZV stats file in QIIME 2 View, download the .tsv and open it in Excel to calculate the recovery. 
+To view the QZV stats file in QIIME 2 View, download the tsv and open it in Excel to calculate the recovery. 
 
 
-To calculate recovery, find the sum of the input, filtered, denoised, merged and non-chimeric columns. Then determine the percentage of reads that made it through each stage by taking the sum of the individual columns (e.g., filtered, denoised, merged or non-chimeric) over the sum of the input column. One can also average the percentage columns to get an estimate of the recovery for each stage (whichever method you prefer). Ideally, you want at least a 70% recovery, or 70% of the total input reads passed through the non-chimeric stage. 
-Your .tsv file should look similar to this: 
+To calculate recovery, find the sum of the input, filtered, denoised, merged and non-chimeric columns. Then determine the percentage of reads that made it through each stage by taking the sum of the individual columns (e.g., filtered, denoised, merged or non-chimeric) over the sum of the input column. One can also average the percentage columns to get an estimate of the recovery for each stage (whichever method you prefer). Ideally, you want at least a 70% recovery, or 70% of the total input reads passing through the non-chimeric stage. 
+Your tsv file should look similar to this: 
 
 <img src="https://github.com/StephRut/Images-for-Github/blob/main/Denoise%20stats_1.png">
 
 
 
-If not enough reads are passing the filtering step, consider reducing the trunc length or other filtering options such as maxEE or truncQ. 
-If not enough reads are passing the merging step, your reads may not be long enough to have a 12 base pair overlap. Consider analyzing single-end reads instead. 
-If a large percentage of reads do not make it past the non-chimeric reads, this may be a sign that the primers have not been fully removed from your reads or that the truncation lengths are too long. 
+If not enough reads are passing the filtering step, consider reducing the truncation length or other filtering options such as maxEE or truncQ. 
+If not enough reads are passing the merging step, your truncated reads may not be long enough to have a 12 base pair overlap. First try to increase your truncation lengths. If that doesn't work, then consider analyzing single-end reads instead. 
+If a large percentage of reads do not make it past the non-chimeric step, this may be a sign that the primers have not been fully removed from your reads or that the truncation lengths are too long. 
 
-In our case, only ~ 53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through. Therefore, we will reduce the trunc length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward trunc length of 165 and a reverse trunc length of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, I would recommend analyzing single-end reads. 
+In our case, only ~53.8% of the input reads were non-chimeric. Looking at each stage of the filtering and denoising process, a majority of the reads were lost due to the intial filter with only approximately 58.9% passing through, which is a consequence of poor quality data. Therefore, we will reduce the truncation length for both the forward and reverse reads to increase our recovery. After several filtering iterations, a forward truncation length of 165 and a reverse of 104 produced the best recovery results. With these parameters, ~75.1% passed the initial input filter, ~71.5% merged, while ~66.7% of the reads were non-chimeric. At this point, if you would like a greater recovery, you may consider analyzing single-end reads. However, with single-end analysis, the taxonomic annotations for the biological data are less likely to be accurate.
 
 [HOW TO DO SINGLE-END ANALYSIS](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md)
 
 ## Step 8: Add Taxonomy and Analyze
 ### Greengenes2
 Now we will download the Greengenes2 database. Greengenes2 is a relatively new bacterial database, but has been found to increase reproducibility between studies.<sup>3</sup>
-First we must install the Greengenes2 Qiime2 plugin from our home direcotry **'~'**. Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
+First you must install the Greengenes2 Qiime2 plugin within your home directory **'~'**. Ensuring that you have qiime2/2023.2 loaded in your environment, we type:
 ```
 pip install q2-greengenes2
 ```
-Next, we want to download the pre-trained classifier for the 16S v4 region using the following command in our **'16s_Tutorial_Analysis'** directory:
+Next, we want to download the pre-trained classifier for the 16S rRNA v4 region using the following command in your **'16s_Tutorial_Analysis'** directory:
 ```
 wget http://ftp.microbio.me/greengenes_release/current/2022.10.backbone.v4.nb.qza
 ```
 
 ⚠️ _NOTE: All of the following qiime commands were ran using a slurm job script._
 
-The commands in Greengenes2 uses closed-reference OTU-picking, but we want to use open-reference, therefore we will be using the ```qiime feature-classifier classify-sklearn```.
-This method uses open-reference OTU picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be retained and clustered against themselves. To perform open-reference OTU picking we type:
+The commands in Greengenes2 uses closed-reference OTU-picking, but we want to use open-reference. Therefore, we will be using the ```qiime feature-classifier classify-sklearn```.
+This method uses open-reference OTU-picking where the sequences will be compared to our reference dataset (greengenes2) for clustering. Any sequences that do not cluster with a reference sequence will be retained and clustered against themselves. To perform open-reference OTU-picking we type:
 ```
 qiime feature-classifier classify-sklearn \
 --i-classifier 2022.10.backbone.v4.nb.qza \
@@ -306,10 +367,10 @@ qiime feature-classifier classify-sklearn \
 ```
 <sup> **[Slurm script](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Qiime-Slurm-Script.md)** used for the above command.</sup>
 
-Here, we input our representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. Our ```--i-classifier``` will be the pre-trained classifier downloaded.
-The outputs will be taxonomy **'taxonomy.qza'** associated with our representative sequences.
+Here, we input the representative sequences from the ```qiime dada2 denoise-paired``` command completed previously. The ```--i-classifier``` will be the pre-trained classifier downloaded.
+The outputs will be taxonomy **'taxonomy.qza'** associated with the representative sequences.
 
-Next we use the table from the ```qiime dada2 denoise-paired``` command and the **'taxonomy.qza'** as inputs into the ```qiime taxa collapse``` command to associated the taxonomy with our table. 
+Next we will use the table from the ```qiime dada2 denoise-paired``` command and the **'taxonomy.qza'** as inputs into the ```qiime taxa collapse``` command to associate the taxonomy with the table. 
 ```
 qiime taxa collapse \
 --i-table dada2-paired-end-table.qza \
@@ -317,7 +378,7 @@ qiime taxa collapse \
 --p-level 7 \
 --o-collapsed-table collapsed_table.qza
 ```
-This will give us our ASV table! Now we just have to adjust the format a bit.
+This will give us the ASV table! Now we just have to adjust the format a bit.
 First, we want to unpack the contents of the file **'collapsed_table.qza'**:
 ```
 unzip collapsed_table.qza
@@ -328,7 +389,7 @@ mv [insert long random directory name here] collapsed_table
 ```
 When putting the long directory name in the command above, do not place brackets around it. This will rename your directory to **'collapsed_table**'.
 
-Navigate to the **'collapsed_table'** directory and then the **'data'** directory within. You will see a **'feature-table.biom'** file. We need to convert this file to tsv format so that it is readable by programs like Excel. This can be achieved by typing:
+Navigate to the **'collapsed_table'** directory and then the **'data'** directory within. You will see a **'feature-table.biom'** file. We need to convert this file to a tsv format so that it is readable by programs like Excel. This can be achieved by typing:
 
 ```
 biom convert -i feature-table.biom -o feature_table.txt --to-tsv
@@ -344,10 +405,9 @@ This is your ASV Table!
 First, we will create a new sheet in Excel and name it 'Analysis'. From the ASV table, copy the sample-ids (316D14,316D21,...) in row 2 and transpose it (a type of paste) in the first column of the 'Analysis' sheet. 
 Let's start by summing up the number of reads per sample. Then we will sum up the number of reads per sample by adding up the numerical values for each column with a sample ID. After summing up column B (316D14), drag the function over to column M. Copy these sums and paste them as values below. Copy these values and transpose them into the 2nd column of the 'Analysis' sheet. Adding the numerical values of column 2 together will give you your final recovery of about 172000. Looking back at the dada2_paired_end_stats, the number of initial sequences before any filtering was 258000. Thus, our final recovery is ~ 66.7%. 
 
-A final recovery of 66.7% is okay, 
+A final recovery of 66.7% is okay and unsurprising with lower quality reads. If your recovery is significantly lower, you can consider running [single-end data analysis](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md) to increase your recovery depth.
 
 
-but I would highly recommend going back and using [single-end data](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/Single-End-16s-Analysis.md) to increase your recovery depth.
 
 #### References
 
