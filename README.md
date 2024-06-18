@@ -266,7 +266,7 @@ These graphs are actually box and whisker plots. You can zoom in on the plots by
 
 The data was trimmed to 301 nucleotides when we received it. Therefore, if the primers were trimmed, the lenghts of the sequences should be ~ 280 nucleotides long. Verify this by checking the sequence length summary at the bottom of the interactive quality plot page.
 
-For 16S rRNA data, the quality of your reads will determine the lengths where you should trim (removing bases from the start) and truncate (removing bases from the end) the sequences. For ITS data, it is generally recommended to filter your data using different metrics, see Filtering step.
+For 16S rRNA data, the quality of your reads will determine the lengths where you should trim (removing bases from the start) and truncate (removing bases from the end) the sequences. For ITS data, it is generally recommended to filter your data using different metrics, see [ITS Analysis](https://github.com/StephRut/MSI-QIIME2-Pipeline-Tutorial/blob/main/ITS%20QIIME2%20Analysis.md).
 
 ## Step 6 : Analyze FastQC
 
